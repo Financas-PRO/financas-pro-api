@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDocenteRequest;
 use App\Http\Requests\UpdateDocenteRequest;
 use App\Models\Docente;
+use App\Models\tipoDeUsuario;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -50,14 +51,22 @@ class DocenteController extends Controller
     public function store(StoreDocenteRequest $request)
     {
         try {
-            $user = new User();
-            $user = $user->create($request->all());
-            $obj = new Docente();
-            $docentes = $obj->create($request->all());
+            $usuario = User::create($request->only('username', 'password', 'email', 'id_tipoDeUsuario'));
+            $usuario->save();
+
+
+            $docente = new Docente($request->only('rg','cpf', 'titulacao', 'telefone','nome'));
+            $docente->id_usuario = $usuario->id;
+            $docente->save();
+
+            $dados = [
+                'usuario' => $usuario,
+                'docente' => $docente,
+            ];
 
             return [
                 'status' => 1,
-                'data' => $docentes
+                'data' => $dados
             ];
         } catch (Exception $e) {
 

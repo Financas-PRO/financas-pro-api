@@ -19,9 +19,11 @@ use Illuminate\Support\Facades\Route;
 Route::resources([
     'turma' => TurmaController::class,
     'docente' => DocenteController::class,
+    'tipoDeUsuario' => TipoDeUsuarioController::class,
+    
 ]);
 
 
 /*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});
+});*/
