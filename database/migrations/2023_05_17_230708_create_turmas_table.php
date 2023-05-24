@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer("semestre");
             $table->string("curso");
             $table->string("turma");
+            $table->boolean('ativo')->default(1);
             $table->timestamps();
         });
     }

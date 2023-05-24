@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDocenteRequest;
 use App\Http\Requests\UpdateDocenteRequest;
 use App\Models\Docente;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -49,7 +50,8 @@ class DocenteController extends Controller
     public function store(StoreDocenteRequest $request)
     {
         try {
-
+            $user = new User();
+            $user = $user->create($request->all());
             $obj = new Docente();
             $docentes = $obj->create($request->all());
 

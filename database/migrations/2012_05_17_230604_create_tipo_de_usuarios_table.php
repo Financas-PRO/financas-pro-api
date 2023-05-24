@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tipo_de_usuarios', function (Blueprint $table) {
             $table->id();
             $table->string("papel");
-            $table->binary("ativo");
+            $table->boolean("ativo")->default(1);
             $table->timestamps();
         });
     }

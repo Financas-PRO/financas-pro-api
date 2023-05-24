@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUsuarioRequest;
+use App\Http\Requests\UpdateUsuarioRequest;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
@@ -12,54 +16,96 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $users = User::all();
+            return response()->json(['status' => true, 'data' => $users]);
+        } catch (Exception $e) {
+            return response()->json(['status' => false, 'error' => $e->getMessage()], 500);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(StoreUsuarioRequest $request)
     {
-        //
+        try {
+            
+            $obj = new User();
+
+            $input = $request->all();
+            $input['password'] = bcrypt($input['password']);
+
+            $user = $obj->create($input);
+
+            $success['token'] =  $user->createToken('MyApp')->accessToken;
+            $success['nome'] =  $user->nome;
+
+
+            return [
+                "status" => true,
+                'data' => $success
+            ];
+
+        } catch (Exception $e){
+
+            return [
+                "status" => false,
+                "error" => $e->getMessage(),
+            ];
+
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function show(User $usuario)
     {
-        //
+        try {
+
+            return [
+                "status" => true,
+                "data" => $usuario
+            ];
+
+        } catch (Exception $e){
+
+            return [
+                "status" => false,
+                "error" => $e->getMessage(),
+            ];
+
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(UpdateUsuarioRequest $request, $id)
     {
-        //
+        try {
+            $usuario = User::findOrFail($id);
+            $usuario->update($request->all());
+    
+            return [
+                "status" => true,
+                "data" => $usuario
+            ];
+    
+        } catch (Exception $e){
+    
+            return [
+                "status" => false,
+                "error" => $e->getMessage()
+            ];
+            
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function destroy(User $usuario)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        try {
+            $usuario->delete();
+    
+            return response(null, 204);
+    
+        } catch (Exception $e) {
+            return [
+                "status" => false,
+                "error" => $e->getMessage()
+            ];
+        }
     }
 }

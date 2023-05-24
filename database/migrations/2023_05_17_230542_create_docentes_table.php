@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("titulacao");
             $table->string("rg");
             $table->string("cpf");
+            $table->boolean('ativo')->default(1);
             $table->string("telefone");
             $table->unsignedBigInteger('id_usuario');
             $table->foreign('id_usuario')->references('id')->on('users');
