@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class tipoDeUsuario extends Model
 {
-    use HasFactory;
-
+    protected $fillable = [
+        'papel',
+    ];
     public function usuarios (){
         return $this->hasMany(tipoDeUsuario::class, 'id', 'id_tipoDeUsuario');
     }

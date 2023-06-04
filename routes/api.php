@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\TurmaController;
+use App\Http\Controllers\TipoDeUsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +21,6 @@ Route::resources([
     'turma' => TurmaController::class,
     'docente' => DocenteController::class,
     'tipoDeUsuario' => TipoDeUsuarioController::class,
-    
 ]);
 
 

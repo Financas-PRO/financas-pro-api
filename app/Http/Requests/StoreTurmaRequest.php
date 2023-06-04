@@ -11,7 +11,7 @@ class StoreTurmaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreTurmaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'ano' => 'required|size:4',
+            'semestre' => 'required',
+            'curso' => 'required',
+            'turma' => 'required|size:1',
         ];
     }
 }

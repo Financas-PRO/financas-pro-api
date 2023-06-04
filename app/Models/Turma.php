@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Turma extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'ano',
+        'semestre',
+        'curso',
+        'turma'
+    ];
 }

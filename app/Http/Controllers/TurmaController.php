@@ -12,19 +12,20 @@ use Illuminate\Http\Request;
 
 class TurmaController extends Controller
 {
-    /**
+   /**
      * Display a listing of the resource.
      */
     public function index()
     {
+
         try {
 
             $obj = new Turma();
-            $turmas = $obj->all();
+            $turma = $obj->all();
 
             return [
                 "status" => true,
-                'data' => $turmas
+                'data' => $turma
             ];
         } catch (Exception $e) {
 
@@ -36,26 +37,17 @@ class TurmaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreTurmaRequest $request)
     {
         try {
-
-            $obj = new Turma();
-            $turmas = $obj->create($request->all());
+            $turma = Turma::create($request->all());
+            $turma->save();
 
             return [
                 'status' => 1,
-                'data' => $turmas
+                'data' => $turma
             ];
         } catch (Exception $e) {
 
@@ -69,13 +61,13 @@ class TurmaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Turma $turmas)
+    public function show(Turma $turma)
     {
         try {
 
             return [
                 "status" => true,
-                "data" => $turmas
+                "data" => $turma
             ];
         } catch (Exception $e) {
 
@@ -87,24 +79,16 @@ class TurmaController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTurmaRequest $request, Turma $turmas)
+    public function update(UpdateTurmaRequest $request, Turma $turma)
     {
         try {
-            $turmas->update($request->all());
+            $turma->update($request->all());
 
             return [
                 "status" => true,
-                "data" => $turmas
+                "data" => $turma
             ];
         } catch (Exception $e) {
 
@@ -118,15 +102,15 @@ class TurmaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Turma $turmas)
+    public function destroy(Turma $turma)
     {
         try {
 
-            $turmas->delete();
+            $turma->delete();
 
             return [
                 "status" => true,
-                "data" => $turmas
+                "data" => $turma
             ];
         } catch (Exception $e) {
 

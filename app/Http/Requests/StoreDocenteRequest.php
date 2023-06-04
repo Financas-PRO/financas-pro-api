@@ -22,7 +22,15 @@ class StoreDocenteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nome' => 'required',
+            'titulacao' => 'required',
+            'rg' => 'required',
+            'cpf' => 'required',
+            'telefone' => 'required',
+            "username" => "required",
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:3',
+            'id_tipoDeUsuario' => 'required'
         ];
     }
 }

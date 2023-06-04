@@ -8,9 +8,14 @@ use User;
 
 class Docente extends Model
 {
-    use HasFactory;
-
-
+    protected $fillable = [
+        'nome',
+        'titulacao',
+        'rg',
+        'cpf',
+        'id_usuario',
+        'telefone'
+    ];
     public function usuario(){
         return $this->hasOne(User::class, 'id', 'id_usuario');
     }

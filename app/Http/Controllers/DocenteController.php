@@ -38,36 +38,22 @@ class DocenteController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreDocenteRequest $request)
     {
         try {
-            $usuario = User::create($request->only('username', 'password', 'email', 'id_tipoDeUsuario'));
+            $usuario = new User($request->only('username', 'password', 'email', 'id_tipoDeUsuario'));
             $usuario->save();
-
-
             $docente = new Docente($request->only('rg','cpf', 'titulacao', 'telefone','nome'));
             $docente->id_usuario = $usuario->id;
             $docente->save();
 
-            $dados = [
-                'usuario' => $usuario,
-                'docente' => $docente,
-            ];
-
             return [
                 'status' => 1,
-                'data' => $dados
+                'data' => $docente
             ];
+
         } catch (Exception $e) {
 
             return [
@@ -80,14 +66,15 @@ class DocenteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Docente $docentes)
+    public function show(Docente $docente)
     {
         try {
 
             return [
                 "status" => true,
-                "data" => $docentes
+                "data" => $docente
             ];
+
         } catch (Exception $e) {
 
             return [
@@ -98,25 +85,23 @@ class DocenteController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateDocenteRequest $request, Docente $docentes)
     {
         try {
-            $docentes->update($request->all());
+            // $usuario = User::findOrFail($docentes->id_usuario);
+            // $usuario = new User($request->only('username', 'password', 'email', 'id_tipoDeUsuario'));
+            // $usuario->update();
+            // $docente = new Docente($request->only('rg','cpf', 'titulacao', 'telefone','nome'));
+            // $docente->id_usuario = $usuario->id;
+            // $docente->update();
 
             return [
                 "status" => true,
                 "data" => $docentes
             ];
+
         } catch (Exception $e) {
 
             return [
@@ -133,12 +118,14 @@ class DocenteController extends Controller
     {
         try {
 
-            $docentes->delete();
+            $usuario = new User();
+            $usuario = $usuario->find($docentes->id_usuario);
 
             return [
                 "status" => true,
-                "data" => $docentes
+                "data" => $usuario
             ];
+            
         } catch (Exception $e) {
 
             return [
