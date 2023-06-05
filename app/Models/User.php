@@ -12,6 +12,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $with = ['tipoDeUsuario'];
+
+    protected $dates = ['deleted_at'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -44,11 +48,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function docente() {
-        return $this->belongsTo(Docente::class, 'id_usuario' , 'id');
-    }
-    public function tipoDeUsuario() 
-    {
-        return $this->belongsTo(TipoDeUsuario::class, 'id_tipoDeUsuario', 'id');
+    public function tipoDeUsuario(){
+        return $this->hasOne(tipoDeUsuario::class, 'id', 'id_tipoDeUsuario');
     }
 }

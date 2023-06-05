@@ -21,7 +21,7 @@ class TurmaController extends Controller
         try {
 
             $obj = new Turma();
-            $turma = $obj->all();
+            $turma = $obj->all()->where('ativo', 1);
 
             return [
                 "status" => true,
@@ -42,6 +42,7 @@ class TurmaController extends Controller
     public function store(StoreTurmaRequest $request)
     {
         try {
+
             $turma = Turma::create($request->all());
             $turma->save();
 
@@ -49,6 +50,7 @@ class TurmaController extends Controller
                 'status' => 1,
                 'data' => $turma
             ];
+
         } catch (Exception $e) {
 
             return [
@@ -69,6 +71,7 @@ class TurmaController extends Controller
                 "status" => true,
                 "data" => $turma
             ];
+
         } catch (Exception $e) {
 
             return [
@@ -84,12 +87,14 @@ class TurmaController extends Controller
     public function update(UpdateTurmaRequest $request, Turma $turma)
     {
         try {
+
             $turma->update($request->all());
 
             return [
                 "status" => true,
                 "data" => $turma
             ];
+
         } catch (Exception $e) {
 
             return [
@@ -106,12 +111,14 @@ class TurmaController extends Controller
     {
         try {
 
-            $turma->delete();
+            $turma->ativo = 0;
+            $turma->update();
 
             return [
                 "status" => true,
                 "data" => $turma
             ];
+            
         } catch (Exception $e) {
 
             return [

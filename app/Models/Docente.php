@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use User;
+use App\Models\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Docente extends Model
 {
+    protected $with = ['user'];
+
     protected $fillable = [
         'nome',
         'titulacao',
@@ -16,7 +19,8 @@ class Docente extends Model
         'id_usuario',
         'telefone'
     ];
-    public function usuario(){
+
+    public function user(){
         return $this->hasOne(User::class, 'id', 'id_usuario');
     }
 }

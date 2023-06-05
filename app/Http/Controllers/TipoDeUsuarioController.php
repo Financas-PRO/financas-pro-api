@@ -20,7 +20,7 @@ class TipoDeUsuarioController extends Controller
         try {
 
             $obj = new tipoDeUsuario();
-            $docentes = $obj->all();
+            $docentes = $obj->all()->where('ativo', 1);
 
             return [
                 "status" => true,
@@ -107,12 +107,15 @@ class TipoDeUsuarioController extends Controller
     {
         try {
 
-            $tipoDeUsuario->delete();
+            $tipoDeUsuario->ativo = 0;
+
+            $tipoDeUsuario->update();
 
             return [
                 "status" => true,
                 "data" => $tipoDeUsuario
             ];
+            
         } catch (Exception $e) {
 
             return [

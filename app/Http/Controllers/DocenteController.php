@@ -22,7 +22,7 @@ class DocenteController extends Controller
         try {
 
             $obj = new Docente();
-            $docentes = $obj->all();
+            $docentes = $obj->all()->where('ativo', 1);
 
             return [
                 "status" => true,
@@ -87,19 +87,18 @@ class DocenteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDocenteRequest $request, Docente $docentes)
+    public function update(UpdateDocenteRequest $request, Docente $docente)
     {
         try {
-            // $usuario = User::findOrFail($docentes->id_usuario);
-            // $usuario = new User($request->only('username', 'password', 'email', 'id_tipoDeUsuario'));
-            // $usuario->update();
-            // $docente = new Docente($request->only('rg','cpf', 'titulacao', 'telefone','nome'));
-            // $docente->id_usuario = $usuario->id;
-            // $docente->update();
+
+            $usuario = User::find($docente->user->id);
+
+            $usuario->update($request->only('username', 'password', 'email', 'id_tipoDeUsuario'));
+            $docente->update($request->only('rg','cpf', 'titulacao', 'telefone','nome'));
 
             return [
                 "status" => true,
-                "data" => $docentes
+                "data" => $docente
             ];
 
         } catch (Exception $e) {
@@ -114,16 +113,19 @@ class DocenteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Docente $docentes)
+    public function destroy(Docente $docente)
     {
         try {
 
-            $usuario = new User();
-            $usuario = $usuario->find($docentes->id_usuario);
+            $usuario = User::find($docente->user->id);
+            $usuario->ativo = 0;
+            $docente->ativo = 0;
+            $docente->update();
+            $usuario->update();
 
             return [
                 "status" => true,
-                "data" => $usuario
+                "data" => $docente
             ];
             
         } catch (Exception $e) {

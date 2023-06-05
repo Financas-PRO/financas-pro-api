@@ -10,8 +10,6 @@ class tipoDeUsuario extends Model
     protected $fillable = [
         'papel',
     ];
-    public function usuarios (){
-        return $this->hasMany(tipoDeUsuario::class, 'id', 'id_tipoDeUsuario');
-    }
+
 
 }
