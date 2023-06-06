@@ -25,4 +25,10 @@ class StoreTipoDeUsuarioRequest extends FormRequest
             'papel' => 'required'
         ];
     }
+
+    public function messages(): array{
+        return [
+            "papel.required" => "O campo de papel é obrigatório!"
+        ];
+    }
 }
