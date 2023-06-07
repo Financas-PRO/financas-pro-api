@@ -36,20 +36,22 @@ class UpdateDocenteRequest extends FormRequest
 
     public function messages(): array {
         return[
-                "nome.required" => "O campo de nome precisa ser preenchido!",
-                "email.required" => "O campo de email precisa ser preenchido!",
-                "email.unique" => "Esse email já está sendo usado por outra pessoa!",
-                "email.email" => "Por favor, informe um endereço de email válido!",
-                "rg.required" => "O campo de rg precisa ser preenchido!",
-                "rg.size" => "O rg só tem 9 dígitos!",
-                "cpf.required" => "O campo CPF precisa ser preenchido!",
-                "cpf.size" => "O CPF precisa ter 11 dígitos!",
-                "telefone.required" => "O campo telefone precisa ser preenchido!",
-                "telefone.size" => "O telefone tem 11 dígitos, use seu DDD",
-                "username.required" => "Voce precisa de um username para fazer login no sistema!",
-                "password.required" => "Voce precisa de uma senha para fazer login no sistema!",
-                "password.size" => "A senha precisa ter no mínimo 3 caracteres!",
-                "titulacao.required" =>"O campo de titulação precisa ser preenchido!"
+            "nome.required" => "O campo de nome é obrigatório!",
+            "email.required" => "O campo de email é obrigatório!",
+            "email.unique" => "Esse email já está sendo usado por outra pessoa!",
+            "email.email" => "Por favor, informe um endereço de email válido!",
+            "rg.required" => "O campo de rg é obrigatório!",
+            "rg.size" => "O rg só tem 9 dígitos!",
+            "cpf.required" => "O campo CPF é obrigatório!",
+            "cpf.size" => "O CPF precisa ter 11 dígitos!",
+            "telefone.required" => "O campo telefone é obrigatório!",
+            "telefone.size" => "O telefone tem 11 dígitos, use seu DDD",
+            "username.required" => "Voce precisa de um username para fazer login no sistema!",
+            "password.required" => "Voce precisa de uma senha para fazer login no sistema!",
+            "password.size" => "A senha precisa ter no mínimo 3 caracteres!",
+            "titulacao.required" =>"O campo de titulação é obrigatório!",
+            "id_tipoDeUsuario" => "O campo do código do usuário é obrigatório!"
+
 
 
 
