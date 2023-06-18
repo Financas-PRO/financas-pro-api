@@ -20,7 +20,7 @@ class TipoDeUsuarioController extends Controller
         try {
 
             $obj = new tipoDeUsuario();
-            $docentes = $obj->all()->where('ativo', 1);
+            $docentes = $obj->all()->where('ativo', 1)->values();
 
             return [
                 "status" => true,

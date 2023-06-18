@@ -13,4 +13,9 @@ class Turma extends Model
         'curso',
         'turma'
     ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 }

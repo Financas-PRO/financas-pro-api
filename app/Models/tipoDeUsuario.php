@@ -11,5 +11,9 @@ class tipoDeUsuario extends Model
         'papel',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 
 }

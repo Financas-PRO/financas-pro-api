@@ -30,12 +30,12 @@ class UpdateTurmaRequest extends FormRequest
     }
     public function messages(): array{
         return [
-            'ano.required' => 'O campo ano é obrigatório!',
-            'ano.size' => 'Use o ano com 4 números (Ex: 2016)',
-            'semestre.required' => 'O campo semestre é obrigatório!',
-            'curso.required' => 'O campo curso é obrigatório!',
-            'turma.required' => 'O campo turma é obrigatório!',
-            'turma.size' => 'O campo turma deve ser definida com apenas 1 letra!',
+            'ano.required' => 'O ano é obrigatório.',
+            'ano.size' => 'Use o ano com 4 números (Ex: 2016).',
+            'semestre.required' => 'O semestre é obrigatório.',
+            'curso.required' => 'O curso é obrigatório.',
+            'turma.required' => 'A turma é obrigatória.',
+            'turma.size' => 'O campo turma deve ser definida com apenas 1 letra.',
         ];
     }
 }

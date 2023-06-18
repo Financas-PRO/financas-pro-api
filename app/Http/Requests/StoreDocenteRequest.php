@@ -35,24 +35,22 @@ class StoreDocenteRequest extends FormRequest
     }
 
     public function messages(): array {
-        return[
-                "nome.required" => "O campo de nome é obrigatório!",
-                "email.required" => "O campo de email é obrigatório!",
-                "email.unique" => "Esse email já está sendo usado por outra pessoa!",
-                "email.email" => "Por favor, informe um endereço de email válido!",
-                "rg.required" => "O campo de rg é obrigatório!",
-                "rg.size" => "O rg só tem 9 dígitos!",
-                "cpf.required" => "O campo CPF é obrigatório!",
-                "cpf.size" => "O CPF precisa ter 11 dígitos!",
-                "telefone.required" => "O campo telefone é obrigatório!",
-                "telefone.size" => "O telefone tem 11 dígitos, use seu DDD",
-                "username.required" => "Voce precisa de um username para fazer login no sistema!",
-                "password.required" => "Voce precisa de uma senha para fazer login no sistema!",
-                "password.size" => "A senha precisa ter no mínimo 3 caracteres!",
-                "titulacao.required" =>"O campo de titulação é obrigatório!",
-                "id_tipoDeUsuario" => "O campo do código do usuário é obrigatório!"
-
-
+        return [
+            "nome.required" => "O campo de nome é obrigatório.",
+            "email.required" => "O campo de email é obrigatório.",
+            "email.unique" => "Esse email já está sendo usado por outra pessoa.",
+            "email.email" => "Por favor, informe um endereço de email válido.",
+            "rg.required" => "O RG é obrigatório.",
+            "rg.size" => "Por favor, digite apenas 9 digítos para o RG.",
+            "cpf.required" => "O CPF é obrigatório.",
+            "cpf.size" => "O CPF precisa ter 11 dígitos.",
+            "telefone.required" => "O telefone é obrigatório",
+            "telefone.size" => "Insira 11 dígitos para o telefone, use seu DDD.",
+            "username.required" => "Você precisa de um usuário para fazer login no sistema.",
+            "password.required" => "Voce precisa de uma senha para fazer login no sistema.",
+            "password.size" => "A senha precisa ter no mínimo 3 caracteres.",
+            "titulacao.required" => "A titulação é obrigatória.",
+            "id_tipoDeUsuario" => "O tipo de usuário é obrigatório."
         ];
 
     }

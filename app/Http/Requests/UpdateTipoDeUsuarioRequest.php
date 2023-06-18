@@ -28,7 +28,7 @@ class UpdateTipoDeUsuarioRequest extends FormRequest
 
     public function messages(): array{
         return [
-            "papel.required" => "O campo de papel é obrigatório!"
+            "papel.required" => "A descrição do papel é obrigatória."
         ];
     }
 }

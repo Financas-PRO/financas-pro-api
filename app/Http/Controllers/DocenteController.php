@@ -22,7 +22,7 @@ class DocenteController extends Controller
         try {
 
             $obj = new Docente();
-            $docentes = $obj->all()->where('ativo', 1);
+            $docentes = $obj->all()->where('ativo', 1)->values();
 
             return [
                 "status" => true,

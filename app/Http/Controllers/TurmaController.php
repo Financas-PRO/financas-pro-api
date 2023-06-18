@@ -21,7 +21,7 @@ class TurmaController extends Controller
         try {
 
             $obj = new Turma();
-            $turma = $obj->all()->where('ativo', 1);
+            $turma = $obj->all()->where('ativo', 1)->values();
 
             return [
                 "status" => true,

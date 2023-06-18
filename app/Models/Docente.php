@@ -20,6 +20,11 @@ class Docente extends Model
         'telefone'
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     public function user(){
         return $this->hasOne(User::class, 'id', 'id_usuario');
     }
