@@ -25,7 +25,7 @@ class StoreDocenteRequest extends FormRequest
             'nome' => 'required',
             'titulacao' => 'required',
             'rg' => 'required|size:9',
-            'cpf' => 'required|size:11',
+            'cpf' => 'required|size:14',
             'telefone' => 'required',
             "username" => "required",
             'email' => 'required|email|unique:users,email',

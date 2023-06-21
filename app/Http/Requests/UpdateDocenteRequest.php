@@ -24,8 +24,8 @@ class UpdateDocenteRequest extends FormRequest
         return [
             'nome' => 'required',
             'titulacao' => 'required',
-            'rg' => 'required',
-            'cpf' => 'required',
+            'rg' => 'required|size:9',
+            'cpf' => 'required|size:14',
             'telefone' => 'required',
             "username" => "required",
             'email' => 'required|email|unique:users,email',
