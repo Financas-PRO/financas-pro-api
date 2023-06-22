@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -52,7 +52,13 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function tipoDeUsuario(){
+    public function tipoDeUsuario()
+    {
         return $this->hasOne(tipoDeUsuario::class, 'id', 'id_tipoDeUsuario');
+    }
+
+    public function findForPassport($username)
+    {
+        return $this->where('username', $username)->first();
     }
 }
