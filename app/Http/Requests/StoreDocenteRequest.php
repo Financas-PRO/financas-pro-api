@@ -43,7 +43,7 @@ class StoreDocenteRequest extends FormRequest
             "rg.required" => "O RG é obrigatório.",
             "rg.size" => "Por favor, digite apenas 9 digítos para o RG.",
             "cpf.required" => "O CPF é obrigatório.",
-            "cpf.size" => "O CPF precisa ter 11 dígitos.",
+            "cpf.size" => "O CPF precisa ter 14 dígitos.",
             "telefone.required" => "O telefone é obrigatório",
             "telefone.size" => "Insira 11 dígitos para o telefone, use seu DDD.",
             "username.required" => "Você precisa de um usuário para fazer login no sistema.",
