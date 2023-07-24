@@ -28,11 +28,11 @@ class UserController extends Controller
                     break;
 
                 case 2:
-                    $token = $usuario->createToken('FinPro', ['docente'])->accessToken;
+                    $token = $usuario->createToken('FinPro', ['docencia'])->accessToken;
                     break;
 
                 case 3:
-                    $token = $usuario->createToken('FinPro', ['aluno'])->accessToken;
+                    $token = $usuario->createToken('FinPro', ['alunos'])->accessToken;
                     break;
 
                 case 4:
@@ -42,7 +42,8 @@ class UserController extends Controller
 
             return response()->json([
                 "status" => true
-            ], 200)->withCookie(cookie('token', $token));;
+            ], 200)->withCookie(cookie('laravel_token', $token));
+
         } else {
 
             return response()->json([
