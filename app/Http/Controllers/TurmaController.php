@@ -12,28 +12,19 @@ use Illuminate\Http\Request;
 
 class TurmaController extends Controller
 {
-   /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
 
-        try {
+        $obj = new Turma();
+        $turma = $obj->all()->where('ativo', 1)->values();
 
-            $obj = new Turma();
-            $turma = $obj->all()->where('ativo', 1)->values();
-
-            return [
-                "status" => true,
-                'data' => $turma
-            ];
-        } catch (Exception $e) {
-
-            return [
-                "status" => false,
-                "error" => $e->getMessage(),
-            ];
-        }
+        return [
+            "status" => true,
+            'data' => $turma
+        ];
     }
 
     /**
@@ -41,23 +32,14 @@ class TurmaController extends Controller
      */
     public function store(StoreTurmaRequest $request)
     {
-        try {
 
-            $turma = Turma::create($request->all());
-            $turma->save();
+        $turma = Turma::create($request->all());
+        $turma->save();
 
-            return [
-                'status' => 1,
-                'data' => $turma
-            ];
-
-        } catch (Exception $e) {
-
-            return [
-                "status" => false,
-                "error" => $e->getMessage(),
-            ];
-        }
+        return [
+            'status' => 1,
+            'data' => $turma
+        ];
     }
 
     /**
@@ -65,20 +47,11 @@ class TurmaController extends Controller
      */
     public function show(Turma $turma)
     {
-        try {
 
-            return [
-                "status" => true,
-                "data" => $turma
-            ];
-
-        } catch (Exception $e) {
-
-            return [
-                "status" => false,
-                "error" => $e->getMessage(),
-            ];
-        }
+        return [
+            "status" => true,
+            "data" => $turma
+        ];
     }
 
     /**
@@ -86,22 +59,12 @@ class TurmaController extends Controller
      */
     public function update(UpdateTurmaRequest $request, Turma $turma)
     {
-        try {
+        $turma->update($request->all());
 
-            $turma->update($request->all());
-
-            return [
-                "status" => true,
-                "data" => $turma
-            ];
-
-        } catch (Exception $e) {
-
-            return [
-                "status" => false,
-                "error" => $e->getMessage()
-            ];
-        }
+        return [
+            "status" => true,
+            "data" => $turma
+        ];
     }
 
     /**
@@ -109,22 +72,13 @@ class TurmaController extends Controller
      */
     public function destroy(Turma $turma)
     {
-        try {
 
-            $turma->ativo = 0;
-            $turma->update();
+        $turma->ativo = 0;
+        $turma->update();
 
-            return [
-                "status" => true,
-                "data" => $turma
-            ];
-            
-        } catch (Exception $e) {
-
-            return [
-                "status" => false,
-                "error" => $e->getMessage()
-            ];
-        }
+        return [
+            "status" => true,
+            "data" => $turma
+        ];
     }
 }

@@ -17,22 +17,14 @@ class TipoDeUsuarioController extends Controller
     public function index()
     {
 
-        try {
+        $obj = new tipoDeUsuario();
+        $docentes = $obj->all()->where('ativo', 1)->values();
 
-            $obj = new tipoDeUsuario();
-            $docentes = $obj->all()->where('ativo', 1)->values();
+        return [
+            "status" => true,
+            'data' => $docentes
+        ];
 
-            return [
-                "status" => true,
-                'data' => $docentes
-            ];
-        } catch (Exception $e) {
-
-            return [
-                "status" => false,
-                "error" => $e->getMessage(),
-            ];
-        }
     }
 
     /**
@@ -40,22 +32,14 @@ class TipoDeUsuarioController extends Controller
      */
     public function store(StoreTipoDeUsuarioRequest $request)
     {
-        try {
 
-            $docente = new tipoDeUsuario($request->all());
-            $docente->save();
+        $docente = new tipoDeUsuario($request->all());
+        $docente->save();
 
-            return [
-                'status' => 1,
-                'data' => $docente
-            ];
-        } catch (Exception $e) {
-
-            return [
-                "status" => false,
-                "error" => $e->getMessage(),
-            ];
-        }
+        return [
+            'status' => 1,
+            'data' => $docente
+        ];
     }
 
     /**
@@ -63,20 +47,11 @@ class TipoDeUsuarioController extends Controller
      */
     public function show(tipoDeUsuario $tipoDeUsuario)
     {
-        try {
 
-            return [
-                "status" => true,
-                "data" => $tipoDeUsuario
-            ];
-
-        } catch (Exception $e) {
-
-            return [
-                "status" => false,
-                "error" => $e->getMessage(),
-            ];
-        }
+        return [
+            "status" => true,
+            "data" => $tipoDeUsuario
+        ];
     }
 
     /**
@@ -84,20 +59,12 @@ class TipoDeUsuarioController extends Controller
      */
     public function update(UpdateTipoDeUsuarioRequest $request, tipoDeUsuario $tipoDeUsuario)
     {
-        try {
-            $tipoDeUsuario->update($request->all());
+        $tipoDeUsuario->update($request->all());
 
-            return [
-                "status" => true,
-                "data" => $tipoDeUsuario
-            ];
-        } catch (Exception $e) {
-
-            return [
-                "status" => false,
-                "error" => $e->getMessage()
-            ];
-        }
+        return [
+            "status" => true,
+            "data" => $tipoDeUsuario
+        ];
     }
 
     /**
@@ -105,23 +72,14 @@ class TipoDeUsuarioController extends Controller
      */
     public function destroy(tipoDeUsuario $tipoDeUsuario)
     {
-        try {
 
-            $tipoDeUsuario->ativo = 0;
+        $tipoDeUsuario->ativo = 0;
 
-            $tipoDeUsuario->update();
+        $tipoDeUsuario->update();
 
-            return [
-                "status" => true,
-                "data" => $tipoDeUsuario
-            ];
-            
-        } catch (Exception $e) {
-
-            return [
-                "status" => false,
-                "error" => $e->getMessage()
-            ];
-        }
+        return [
+            "status" => true,
+            "data" => $tipoDeUsuario
+        ];
     }
 }

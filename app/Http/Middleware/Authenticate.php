@@ -3,15 +3,21 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
-use Illuminate\Http\Request;
+use Closure;
 
 class Authenticate extends Middleware
 {
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      */
-    protected function redirectTo(Request $request): ?string
+    public function handle($request, Closure $next, ...$guards)
     {
-        return $request->expectsJson() ? null : route('login');
+        if ($request->cookie('laravel_token')) {
+            $request->headers->set('Authorization', 'Bearer ' . $request->cookie('laravel_token'));
+        }
+
+        $this->authenticate($request, $guards);
+
+        return $next($request);
     }
 }
