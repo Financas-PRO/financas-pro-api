@@ -14,23 +14,27 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $obj = new Feedback();
+        $feedback = $obj->all()->where('ativo', 1)->values();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return [
+            "status" => true,
+            'data' => $feedback
+        ];
     }
-
+    
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreFeedbackRequest $request)
     {
-        //
+        $feedback = Feedback::create($request->all());
+        $feedback->save();
+        
+        return [
+            'status' => 1,
+            'data' => $feedback
+        ];
     }
 
     /**
@@ -38,23 +42,24 @@ class FeedbackController extends Controller
      */
     public function show(Feedback $feedback)
     {
-        //
+        return [
+            "status" => true,
+            "data" => $feedback
+        ];
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Feedback $feedback)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateFeedbackRequest $request, Feedback $feedback)
     {
-        //
+        $feedback->update($request->all());
+
+        return [
+            "status" => true,
+            "data" => $feedback
+        ];
     }
 
     /**
@@ -62,6 +67,13 @@ class FeedbackController extends Controller
      */
     public function destroy(Feedback $feedback)
     {
-        //
+        $feedback->ativo = 0;
+        $feedback->update();
+
+        return [
+            "status" => true,
+            "data" => $feedback
+        ];
+
     }
 }

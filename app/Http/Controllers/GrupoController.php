@@ -14,23 +14,28 @@ class GrupoController extends Controller
      */
     public function index()
     {
-        //
+        $obj = new Grupo();
+        $grupo = $obj->all()->where('ativo', 1)->values();
+
+        return [
+            "status" => true,
+            'data' => $grupo
+        ];
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreGrupoRequest $request)
     {
-        //
+        $grupo = Grupo::create($request->all());
+        $grupo->save();
+        
+        return [
+            'status' => 1,
+            'data' => $grupo
+        ];
     }
 
     /**
@@ -38,23 +43,24 @@ class GrupoController extends Controller
      */
     public function show(Grupo $grupo)
     {
-        //
+        return [
+            "status" => true,
+            "data" => $grupo
+        ];
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Grupo $grupo)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateGrupoRequest $request, Grupo $grupo)
     {
-        //
+        $grupo->update($request->all());
+
+        return [
+            "status" => true,
+            "data" => $grupo
+        ];
     }
 
     /**
@@ -62,6 +68,12 @@ class GrupoController extends Controller
      */
     public function destroy(Grupo $grupo)
     {
-        //
+        $grupo->ativo = 0;
+        $grupo->update();
+
+        return [
+            "status" => true,
+            "data" => $grupo
+        ];
     }
 }

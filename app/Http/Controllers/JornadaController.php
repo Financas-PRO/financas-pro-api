@@ -14,15 +14,13 @@ class JornadaController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $obj = new Jornada();
+        $jornada = $obj->all()->where('ativo', 1)->values();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return [
+            "status" => true,
+            'data' => $jornada
+        ];
     }
 
     /**
@@ -30,7 +28,13 @@ class JornadaController extends Controller
      */
     public function store(StoreJornadaRequest $request)
     {
-        //
+        $jornada = Jornada::create($request->all());
+        $jornada->save();
+        
+        return [
+            'status' => 1,
+            'data' => $jornada
+        ];
     }
 
     /**
@@ -38,23 +42,25 @@ class JornadaController extends Controller
      */
     public function show(Jornada $jornada)
     {
-        //
+        return [
+            "status" => true,
+            "data" => $jornada
+        ];
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Jornada $jornada)
-    {
-        //
-    }
+   
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateJornadaRequest $request, Jornada $jornada)
     {
-        //
+        $jornada->update($request->all());
+
+        return [
+            "status" => true,
+            "data" => $jornada
+        ];
     }
 
     /**
@@ -62,6 +68,12 @@ class JornadaController extends Controller
      */
     public function destroy(Jornada $jornada)
     {
-        //
+        $jornada->ativo = 0;
+        $jornada->update();
+
+        return [
+            "status" => true,
+            "data" => $jornada
+        ];
     }
 }

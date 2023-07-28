@@ -14,23 +14,28 @@ class DividendoController extends Controller
      */
     public function index()
     {
-        //
+        $obj = new Dividendo();
+        $dividendo = $obj->all()->where('ativo', 1)->values();
+
+        return [
+            "status" => true,
+            'data' => $dividendo
+        ];
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreDividendoRequest $request)
     {
-        //
+        $dividendo = Dividendo::create($request->all());
+        $dividendo->save();
+
+        return [
+            'status' => 1,
+            'data' => $dividendo
+        ];
     }
 
     /**
@@ -38,23 +43,24 @@ class DividendoController extends Controller
      */
     public function show(Dividendo $dividendo)
     {
-        //
+        return [
+            "status" => true,
+            "data" => $dividendo
+        ];
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Dividendo $dividendo)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateDividendoRequest $request, Dividendo $dividendo)
     {
-        //
+        $dividendo->update($request->all());
+
+        return [
+            "status" => true,
+            "data" => $dividendo
+        ];
     }
 
     /**
@@ -62,6 +68,12 @@ class DividendoController extends Controller
      */
     public function destroy(Dividendo $dividendo)
     {
-        //
+        $dividendo->ativo = 0;
+        $dividendo->update();
+
+        return [
+            "status" => true,
+            "data" => $dividendo
+        ];
     }
 }

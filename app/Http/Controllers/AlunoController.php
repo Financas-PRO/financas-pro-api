@@ -14,23 +14,28 @@ class AlunoController extends Controller
      */
     public function index()
     {
-        //
+        $obj = new Aluno();
+        $aluno = $obj->all()->where('ativo', 1)->values();
+
+        return [
+            "status" => true,
+            'data' => $aluno
+        ];
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreAlunoRequest $request)
     {
-        //
+        $aluno = Aluno::create($request->all());
+        $aluno->save();
+
+        return [
+            'status' => 1,
+            'data' => $aluno
+        ];
     }
 
     /**
@@ -38,23 +43,24 @@ class AlunoController extends Controller
      */
     public function show(Aluno $aluno)
     {
-        //
+        return [
+            "status" => true,
+            "data" => $aluno
+        ];
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Aluno $aluno)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateAlunoRequest $request, Aluno $aluno)
     {
-        //
+        $aluno->update($request->all());
+
+        return [
+            "status" => true,
+            "data" => $aluno
+        ];
     }
 
     /**
@@ -62,6 +68,12 @@ class AlunoController extends Controller
      */
     public function destroy(Aluno $aluno)
     {
-        //
+        $aluno->ativo = 0;
+        $aluno->update();
+
+        return [
+            "status" => true,
+            "data" => $aluno
+        ];
     }
 }

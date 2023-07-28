@@ -14,23 +14,28 @@ class AnaliseGrupoController extends Controller
      */
     public function index()
     {
-        //
+        $obj = new AnaliseGrupo();
+        $analiseGrupo = $obj->all()->where('ativo', 1)->values();
+
+        return [
+            "status" => true,
+            'data' => $analiseGrupo
+        ];
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreAnaliseGrupoRequest $request)
     {
-        //
+        $analiseGrupo = AnaliseGrupo::create($request->all());
+        $analiseGrupo->save();
+
+        return [
+            'status' => 1,
+            'data' => $analiseGrupo
+        ];
     }
 
     /**
@@ -38,23 +43,24 @@ class AnaliseGrupoController extends Controller
      */
     public function show(AnaliseGrupo $analiseGrupo)
     {
-        //
+        return [
+            "status" => true,
+            "data" => $analiseGrupo
+        ];
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(AnaliseGrupo $analiseGrupo)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateAnaliseGrupoRequest $request, AnaliseGrupo $analiseGrupo)
     {
-        //
+        $analiseGrupo->update($request->all());
+
+        return [
+            "status" => true,
+            "data" => $analiseGrupo
+        ];
     }
 
     /**
@@ -62,6 +68,12 @@ class AnaliseGrupoController extends Controller
      */
     public function destroy(AnaliseGrupo $analiseGrupo)
     {
-        //
+        $analiseGrupo->ativo = 0;
+        $analiseGrupo->update();
+
+        return [
+            "status" => true,
+            "data" => $analiseGrupo
+        ];
     }
 }

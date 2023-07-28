@@ -7,30 +7,35 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorealunoGrupoRequest;
 use App\Http\Requests\UpdatealunoGrupoRequest;
 
-class AlunoGrupoController extends Controller
+class alunoGrupoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
+    {   
+        $obj = new alunoGrupo();
+        $alunoGrupo = $obj->all()->where('ativo', 1)->values();
+
+        return [
+            "status" => true,
+            'data' => $alunoGrupo
+        ];
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StorealunoGrupoRequest $request)
     {
-        //
+        $alunoGrupo = alunoGrupo::create($request->all());
+        $alunoGrupo->save();
+
+        return [
+            'status' => 1,
+            'data' => $alunoGrupo
+        ];
     }
 
     /**
@@ -38,23 +43,25 @@ class AlunoGrupoController extends Controller
      */
     public function show(alunoGrupo $alunoGrupo)
     {
-        //
+        return [
+            "status" => true,
+            "data" => $alunoGrupo
+        ];
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(alunoGrupo $alunoGrupo)
-    {
-        //
-    }
+  
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdatealunoGrupoRequest $request, alunoGrupo $alunoGrupo)
     {
-        //
+        $alunoGrupo->update($request->all());
+
+        return [
+            "status" => true,
+            "data" => $alunoGrupo
+        ];
     }
 
     /**
@@ -62,6 +69,12 @@ class AlunoGrupoController extends Controller
      */
     public function destroy(alunoGrupo $alunoGrupo)
     {
-        //
+        $alunoGrupo->ativo = 0;
+        $alunoGrupo->update();
+
+        return [
+            "status" => true,
+            "data" => $alunoGrupo
+        ];
     }
 }

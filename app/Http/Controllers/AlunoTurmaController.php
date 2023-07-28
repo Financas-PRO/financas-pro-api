@@ -14,23 +14,29 @@ class AlunoTurmaController extends Controller
      */
     public function index()
     {
-        //
+        $obj = new AlunoTurma();
+        $alunoTurma = $obj->all()->where('ativo', 1)->values();
+
+        return [
+            "status" => true,
+            'data' => $alunoTurma
+        ];
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+   
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreAlunoTurmaRequest $request)
     {
-        //
+        $alunoTurma = AlunoTurma::create($request->all());
+        $alunoTurma->save();
+
+        return [
+            'status' => 1,
+            'data' => $alunoTurma
+        ];
     }
 
     /**
@@ -38,23 +44,24 @@ class AlunoTurmaController extends Controller
      */
     public function show(AlunoTurma $alunoTurma)
     {
-        //
+        return [
+            "status" => true,
+            "data" => $alunoTurma
+        ];
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(AlunoTurma $alunoTurma)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateAlunoTurmaRequest $request, AlunoTurma $alunoTurma)
     {
-        //
+        $alunoTurma->update($request->all());
+
+        return [
+            "status" => true,
+            "data" => $alunoTurma
+        ];
     }
 
     /**
@@ -62,6 +69,12 @@ class AlunoTurmaController extends Controller
      */
     public function destroy(AlunoTurma $alunoTurma)
     {
-        //
+        $alunoTurma->ativo = 0;
+        $alunoTurma->update();
+
+        return [
+            "status" => true,
+            "data" => $alunoTurma
+        ];
     }
 }

@@ -14,23 +14,29 @@ class AcaoController extends Controller
      */
     public function index()
     {
-        //
+        $obj = new Acao();
+        $acoes = $obj->all()->where('ativo', 1)->values();
+
+        return [
+            "status" => true,
+            'data' => $acoes
+        ];
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreAcaoRequest $request)
     {
-        //
+        $acoes = Acao::create($request->all());
+        $acoes->save();
+
+        return [
+            'status' => 1,
+            'data' => $acoes
+        ];
     }
 
     /**
@@ -38,23 +44,24 @@ class AcaoController extends Controller
      */
     public function show(Acao $acao)
     {
-        //
+        return [
+            "status" => true,
+            "data" => $acao
+        ];
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Acao $acao)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateAcaoRequest $request, Acao $acao)
     {
-        //
+        $acao->update($request->all());
+
+        return [
+            "status" => true,
+            "data" => $acao
+        ];
     }
 
     /**
@@ -62,6 +69,12 @@ class AcaoController extends Controller
      */
     public function destroy(Acao $acao)
     {
-        //
+        $acao->ativo = 0;
+        $acao->update();
+
+        return [
+            "status" => true,
+            "data" => $acao
+        ];
     }
 }
