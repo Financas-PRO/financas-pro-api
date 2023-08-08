@@ -15,11 +15,10 @@ return new class extends Migration
             $table->id();
             $table->integer("ano");
             $table->integer("semestre");
-            $table->string("curso");
             $table->string("turma");
             $table->boolean('ativo')->default(1);
-            $table->unsignedBigInteger('id_grupo');
-            $table->foreign('id_grupo')->references('id')->on('grupos');
+            $table->unsignedBigInteger('id_curso');
+            $table->foreign('id_curso')->references('id')->on('cursos');
             $table->timestamps();
         });
     }

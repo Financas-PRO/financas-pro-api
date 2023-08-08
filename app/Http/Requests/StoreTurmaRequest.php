@@ -28,25 +28,25 @@ class StoreTurmaRequest extends FormRequest
                 return $query->where('turma', $request->input('turma'))
                     ->where('ano', $request->input('ano'))
                     ->where('semestre', $request->input('semestre'))
-                    ->where('curso', $request->input('curso'));
+                    ->where('id_curso', $request->input('id_curso'));
             }), 'size:4'],
             'semestre' => ['required',  Rule::unique('turmas')->where(function ($query) use ($request) {
                 return $query->where('turma', $request->input('turma'))
                     ->where('ano', $request->input('ano'))
                     ->where('semestre', $request->input('semestre'))
-                    ->where('curso', $request->input('curso'));
+                    ->where('id_curso', $request->input('id_curso'));
             }), 'size:1'],
-            'curso' => ['required',  Rule::unique('turmas')->where(function ($query) use ($request) {
+            'id_curso' => ['required',  Rule::unique('turmas')->where(function ($query) use ($request) {
                 return $query->where('turma', $request->input('turma'))
                     ->where('ano', $request->input('ano'))
                     ->where('semestre', $request->input('semestre'))
-                    ->where('curso', $request->input('curso'));
+                    ->where('id_curso', $request->input('id_curso'));
             })],
             'turma' => ['required',  Rule::unique('turmas')->where(function ($query) use ($request) {
                 return $query->where('turma', $request->input('turma'))
                     ->where('ano', $request->input('ano'))
                     ->where('semestre', $request->input('semestre'))
-                    ->where('curso', $request->input('curso'));
+                    ->where('id_curso', $request->input('id_curso'));
             }),'size:1'],
         ];
     }
@@ -59,7 +59,7 @@ class StoreTurmaRequest extends FormRequest
             'ano.size' => 'Use o ano com 4 números (Ex: 2016).',
             'semestre.required' => 'O semestre é obrigatório.',
             'semestre.size' => 'O semestre deve conter apenas um número.',
-            'curso.required' => 'O curso é obrigatório.',
+            'id_curso.required' => 'O id_curso é obrigatório.',
             'turma.required' => 'A turma é obrigatória.',
             'turma.size' => 'O campo turma deve ser definida com apenas 1 letra.',
         ];

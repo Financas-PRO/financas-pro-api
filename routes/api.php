@@ -5,6 +5,7 @@ use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\TipoDeUsuarioController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CursoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,7 @@ Route::resources([
     'turma' => TurmaController::class,
     'docente' => DocenteController::class,
     'tipoDeUsuario' => TipoDeUsuarioController::class,
+    'cursos' => CursoController::class
 ]);
 
 /*
