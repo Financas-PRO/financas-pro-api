@@ -10,7 +10,7 @@ class Turma extends Model
     protected $fillable = [
         'ano',
         'semestre',
-        'curso',
+        'id_curso',
         'turma'
     ];
 

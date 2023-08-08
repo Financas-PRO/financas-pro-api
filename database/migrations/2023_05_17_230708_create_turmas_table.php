@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string("curso");
             $table->string("turma");
             $table->boolean('ativo')->default(1);
+            $table->unsignedBigInteger('id_grupo');
+            $table->foreign('id_grupo')->references('id')->on('grupos');
             $table->timestamps();
         });
     }
