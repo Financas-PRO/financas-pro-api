@@ -42,7 +42,7 @@ class UserController extends Controller
 
             return response()->json([
                 "status" => true
-            ], 200)->withCookie(cookie('laravel_token', $token, 1440, '/', null, null, true, false, "none"));
+            ], 200)->withCookie(cookie('laravel_token', $token, 0, null, null, true, true, false, "None"));
 
         } else {
 
