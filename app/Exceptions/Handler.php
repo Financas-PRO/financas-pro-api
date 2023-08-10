@@ -54,7 +54,7 @@ class Handler extends ExceptionHandler
                 break;
 
             case $e instanceof Exception:
-                return $this->prepararJson(str_contains($e->getMessage(), 'SQLSTATE') ? "Ocorreu um erro interno, por favor contate o administrador do sistema." : $e->getMessage(), 400);
+                return $this->prepararJson( $e->getMessage(), 400);
                 break;
 
             default:

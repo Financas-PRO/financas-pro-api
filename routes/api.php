@@ -5,6 +5,7 @@ use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\TipoDeUsuarioController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CursoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout']);
+Route::get('cursos', [CursoController::class, 'index']);
+
+Route::resources([
+    'turma' => TurmaController::class,
+    'docente' => DocenteController::class,
+    'tipoDeUsuario' => TipoDeUsuarioController::class,
+    'cursos' => CursoController::class
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -23,26 +32,16 @@ Route::post('logout', [UserController::class, 'logout']);
 Route::middleware('auth:api')->group(function () {
 
     Route::middleware('scope:admin')->group(function () {
-
-        // Route::resources([
-        //     'turma' => TurmaController::class,
-        //     'docente' => DocenteController::class,
-        //     'tipoDeUsuario' => TipoDeUsuarioController::class,
-        // ]);
     });
 
     Route::middleware('scopes:admin,coordenador')->group(function () {
     });
 
     Route::middleware('scopes:docencia')->group(function () {
-
-        Route::resources([
-            'turma' => TurmaController::class,
-            'docente' => DocenteController::class,
-            'tipoDeUsuario' => TipoDeUsuarioController::class,
-        ]);
+        
     });
 
     Route::middleware('scopes:admin,aluno')->group(function () {
     });
+    
 });
