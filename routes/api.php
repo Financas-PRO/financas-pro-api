@@ -15,13 +15,11 @@ use App\Http\Controllers\CursoController;
 
 Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout']);
-Route::get('cursos', [CursoController::class, 'index']);
 
 Route::resources([
     'turma' => TurmaController::class,
     'docente' => DocenteController::class,
-    'tipoDeUsuario' => TipoDeUsuarioController::class,
-    'cursos' => CursoController::class
+    'tipoDeUsuario' => TipoDeUsuarioController::class
 ]);
 
 /*
@@ -30,6 +28,8 @@ Route::resources([
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth:api')->group(function () {
+
+    Route::get('cursos', [CursoController::class, 'index']);
 
     Route::middleware('scope:admin')->group(function () {
     });

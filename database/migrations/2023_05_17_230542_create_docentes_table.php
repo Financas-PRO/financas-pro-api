@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("cpf");
             $table->boolean('ativo')->default(1);
             $table->string("telefone");
+            $table->string("matricula");
             $table->unsignedBigInteger('id_usuario');
             $table->foreign('id_usuario')->references('id')->on('users');
             $table->timestamps();
