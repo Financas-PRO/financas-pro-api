@@ -6,9 +6,27 @@ use App\Models\Acao;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAcaoRequest;
 use App\Http\Requests\UpdateAcaoRequest;
+use GuzzleHttp\Client;
 
 class AcaoController extends Controller
 {
+    public function capturarAcoesB3(){
+
+        $client = new Client();
+
+        try{
+            $response  = $client->get('https://api.b3.com.br/v2/stocks/quotes?symbols=PETR4,VALE3');
+            // Processar e retornar os dados conforme necessário
+            $quotes = json_decode($response->getBody(), true);
+            var_dump($quotes);
+        }
+            catch(\Exception $e){
+                return response()->json(['error' =>'Erro ao acessar a API da B3, por favor, tente novamente', 500]);
+            }
+
+        }
+
+
     /**
      * Display a listing of the resource.
      */
