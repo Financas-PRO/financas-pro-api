@@ -15,7 +15,8 @@ class AcaoController extends Controller
         $client = new Client();
 
         try{
-            $response  = $client->get('https://api.b3.com.br/v2/stocks/quotes?symbols=PETR4,VALE3');
+            $response  = $client->get('https://brapi.dev/api/quote/PETR4%2C%5EBVSP?range=1d&interval=1d&fundamental=true&dividends=true
+            ');
             // Processar e retornar os dados conforme necessário
             $quotes = json_decode($response->getBody(), true);
             var_dump($quotes);
