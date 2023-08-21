@@ -18,6 +18,9 @@ return new class extends Migration
             $table->boolean("ativo")->default(1);
             $table->unsignedBigInteger('id_usuario');
             $table->foreign('id_usuario')->references('id')->on('users');
+            $table->unsignedBigInteger('id_curso');
+            $table->foreign('id_curso')->references('id')->on('cursos');
+            $table->integer('termo');
             $table->timestamps();
 
         });

@@ -7,7 +7,6 @@ use App\Models\Grupo;
 
 class Acao extends Model
 {
-
     protected $with = ['grupo'];
 
     protected $fillable = [
@@ -31,5 +30,9 @@ class Acao extends Model
 
     public function grupo(){
         return $this->hasOne(Grupo::class, 'id', 'id_grupo');
+    }
+
+    protected function importarDados(){
+        
     }
 }

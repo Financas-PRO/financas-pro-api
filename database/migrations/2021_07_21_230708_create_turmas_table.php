@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer("semestre");
             $table->string("turma");
             $table->boolean('ativo')->default(1);
-            $table->unsignedBigInteger('id_curso');
-            $table->foreign('id_curso')->references('id')->on('cursos');
+            $table->unsignedBigInteger('id_disciplina');
+            $table->foreign('id_disciplina')->references('id')->on('disciplinas');
             $table->timestamps();
         });
     }
