@@ -51,7 +51,6 @@ class DocenteController extends Controller
      */
     public function show(Docente $docente)
     {
-
         return [
             "status" => true,
             "data" => $docente

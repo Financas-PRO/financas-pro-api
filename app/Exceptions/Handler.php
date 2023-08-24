@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
                 break;
 
             default:
-                return $this->prepararJson($e->getMessage(), $e->getStatusCode());
+                return $this->prepararJson($e->getMessage(), 500);
         }
     }
 

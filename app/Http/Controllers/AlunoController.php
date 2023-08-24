@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aluno;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAlunoRequest;
 use App\Http\Requests\UpdateAlunoRequest;
+use Illuminate\Http\Request;
 
 class AlunoController extends Controller
 {
@@ -74,6 +77,33 @@ class AlunoController extends Controller
         return [
             "status" => true,
             "data" => $aluno
+        ];
+    }
+
+    public function importarAlunos(Request $request)
+    {
+        $alunos = Aluno::importarAlunos($request->file('txt')->get());
+
+        $importados = [];
+
+        foreach ($alunos as $aluno) {
+
+            // $disciplina = Disciplina::where('nome', $aluno->disciplina);
+            $curso = DB::table('cursos')->where('curso', $aluno->curso)->first();
+
+            $model_usuario = new User(['username' => $aluno->username, 'password' => "teste", "email" => $aluno->email, 'id_tipoDeUsuario' => 3]);
+            $model_usuario->save();
+            $model_aluno = new Aluno(['nome' => $aluno->nome, 'ra' => $aluno->ra, 'id_usuario' => $model_usuario->id, "id_curso" => $curso->id, 'termo' => $aluno->termo]);
+            $model_aluno->save();
+
+
+            array_push($importados, $model_aluno);
+
+        };
+
+        return [
+            'status' => true,
+            'alunos_importados' => $importados
         ];
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlunoController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\TipoDeUsuarioController;
@@ -15,6 +16,8 @@ use App\Http\Controllers\CursoController;
 
 Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout']);
+
+Route::post('importarAlunos', [AlunoController::class, 'importarAlunos']);
 
 Route::resources([
     'turma' => TurmaController::class,
