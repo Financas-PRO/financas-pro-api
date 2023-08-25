@@ -17,7 +17,7 @@ use App\Http\Controllers\CursoController;
 Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout']);
 
-Route::post('importarAlunos', [AlunoController::class, 'importarAlunos']);
+Route::post('importarAlunos/{turma}', [AlunoController::class, 'importarAlunos']);
 
 Route::resources([
     'turma' => TurmaController::class,

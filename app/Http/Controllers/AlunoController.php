@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aluno;
-use Illuminate\Support\Facades\DB;
-use App\Models\User;
+use App\Models\Turma;
+use App\Models\AlunoTurma;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAlunoRequest;
 use App\Http\Requests\UpdateAlunoRequest;
@@ -80,30 +80,23 @@ class AlunoController extends Controller
         ];
     }
 
-    public function importarAlunos(Request $request)
+    public function importarAlunos(Request $request, Turma $turma)
     {
-        $alunos = Aluno::importarAlunos($request->file('txt')->get());
+        $model = new Aluno();
 
-        $importados = [];
+        $array_alunos = $model->tratarArquivoAlunos($request->file('txt')->get());
 
-        foreach ($alunos as $aluno) {
+        $alunos = $model->importarAlunos($array_alunos);
 
-            // $disciplina = Disciplina::where('nome', $aluno->disciplina);
-            $curso = DB::table('cursos')->where('curso', $aluno->curso)->first();
+        foreach ($alunos as $aluno){
 
-            $model_usuario = new User(['username' => $aluno->username, 'password' => "teste", "email" => $aluno->email, 'id_tipoDeUsuario' => 3]);
-            $model_usuario->save();
-            $model_aluno = new Aluno(['nome' => $aluno->nome, 'ra' => $aluno->ra, 'id_usuario' => $model_usuario->id, "id_curso" => $curso->id, 'termo' => $aluno->termo]);
-            $model_aluno->save();
-
-
-            array_push($importados, $model_aluno);
-
+            $aluno_turma = new AlunoTurma(["id_turma" => $turma->id, "id_aluno" => $aluno->id]);
+            $aluno_turma->save();
         };
-
+    
         return [
             'status' => true,
-            'alunos_importados' => $importados
+            'alunos_importados' => $alunos
         ];
     }
 }

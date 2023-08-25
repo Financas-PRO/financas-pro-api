@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTipoDeUsuarioRequest;
 use App\Http\Requests\UpdateTipoDeUsuarioRequest;
 use App\Models\tipoDeUsuario;
-use Illuminate\Http\Request;
-use Exception;
 
 class TipoDeUsuarioController extends Controller
 {

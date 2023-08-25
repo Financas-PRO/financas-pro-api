@@ -27,26 +27,17 @@ class StoreTurmaRequest extends FormRequest
             'ano' => ['required', Rule::unique('turmas')->where(function ($query) use ($request) {
                 return $query->where('turma', $request->input('turma'))
                     ->where('ano', $request->input('ano'))
-                    ->where('semestre', $request->input('semestre'))
-                    ->where('id_curso', $request->input('id_curso'));
+                    ->where('semestre', $request->input('semestre'));
             }), 'size:4'],
             'semestre' => ['required',  Rule::unique('turmas')->where(function ($query) use ($request) {
                 return $query->where('turma', $request->input('turma'))
                     ->where('ano', $request->input('ano'))
-                    ->where('semestre', $request->input('semestre'))
-                    ->where('id_curso', $request->input('id_curso'));
+                    ->where('semestre', $request->input('semestre'));
             }), 'size:1'],
-            'id_curso' => ['required',  Rule::unique('turmas')->where(function ($query) use ($request) {
-                return $query->where('turma', $request->input('turma'))
-                    ->where('ano', $request->input('ano'))
-                    ->where('semestre', $request->input('semestre'))
-                    ->where('id_curso', $request->input('id_curso'));
-            })],
             'turma' => ['required',  Rule::unique('turmas')->where(function ($query) use ($request) {
                 return $query->where('turma', $request->input('turma'))
                     ->where('ano', $request->input('ano'))
-                    ->where('semestre', $request->input('semestre'))
-                    ->where('id_curso', $request->input('id_curso'));
+                    ->where('semestre', $request->input('semestre'));
             }),'size:1'],
         ];
     }

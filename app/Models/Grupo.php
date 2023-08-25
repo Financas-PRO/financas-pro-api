@@ -19,6 +19,7 @@ class Grupo extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
+        'id_turma',
         'ativo'
     ];
 

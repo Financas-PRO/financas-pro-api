@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Curso;
 use stdClass;
@@ -22,6 +23,9 @@ class Aluno extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
+        'id_usuario',
+        'id_curso',
+        'ativo'
     ];
 
     public function user(){
@@ -32,7 +36,11 @@ class Aluno extends Model
         return $this->hasOne(Curso::class, 'id', 'id_curso');
     }
 
-    public static function importarAlunos($string){
+    /**
+     * TODO: se o aluno já está registrado no sistema, procurar os dados pelo username que vem do txt
+     * e atualizar? Como lidar com alunos que estão em mais de um curso, termo, turma...
+     */
+    public function tratarArquivoAlunos($string){
 
         $alunos = [];
 
@@ -57,5 +65,38 @@ class Aluno extends Model
         }
 
         return $alunos;
+    }
+
+    public function importarAlunos($alunos){
+
+        $importados = [];
+
+        foreach ($alunos as $aluno) {
+
+            // $disciplina = Disciplina::where('nome', $aluno->disciplina);
+            $curso = DB::table('cursos')->where('curso', $aluno->curso)->first();
+
+            $model_usuario = new User(['username' => $aluno->username, 'password' => $this->gerarSenha(["nome" => $aluno->nome, "ra" => $aluno->ra]),
+            "email" => $aluno->email, 'id_tipoDeUsuario' => 3]);
+            $model_usuario->save();
+
+            $model_aluno = new Aluno(['nome' => $aluno->nome, 'ra' => $aluno->ra, 'id_usuario' => $model_usuario->id, "id_curso" => $curso->id, 
+            'termo' => $aluno->termo]);
+            $model_aluno->save();
+
+            array_push($importados, Aluno::find($model_aluno->id));
+
+        };
+
+        return $importados;
+    }
+
+    private function gerarSenha($info){
+
+        $nome = explode(" ", $info["nome"]);
+        $ra = substr($info["ra"], -3);
+
+        return $nome[0] . $nome[1] . "@" . $ra;
+
     }
 }

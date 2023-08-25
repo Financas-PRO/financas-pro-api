@@ -22,6 +22,8 @@ class Docente extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
+        'id_usuario',
+        'ativo'
     ];
 
     public function user(){

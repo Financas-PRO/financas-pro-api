@@ -21,7 +21,9 @@ class Feedback extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'ativo'
+        'ativo',
+        'id_docente',
+        'id_grupo'
     ];
 
     public function grupo(){

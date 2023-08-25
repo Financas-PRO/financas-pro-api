@@ -21,6 +21,8 @@ class Dividendo extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
+        'ativo',
+        'id_acao'
     ];
 
     public function acao(){

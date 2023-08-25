@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTurmaRequest;
 use App\Http\Requests\UpdateTurmaRequest;
-use App\Models\Docente;
 use App\Models\Turma;
-use Exception;
-use Illuminate\Http\Request;
 
 class TurmaController extends Controller
 {

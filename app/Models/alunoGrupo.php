@@ -15,6 +15,14 @@ class alunoGrupo extends Model
         'id_aluno'
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'ativo',
+        'id_grupo',
+        'id_aluno'
+    ];
+
     public function aluno(){
         return $this->hasOne(Aluno::class, 'id', 'id_aluno');
     }

@@ -6,10 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDocenteRequest;
 use App\Http\Requests\UpdateDocenteRequest;
 use App\Models\Docente;
-use App\Models\tipoDeUsuario;
 use App\Models\User;
-use Exception;
-use Illuminate\Http\Request;
 
 class DocenteController extends Controller
 {

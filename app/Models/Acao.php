@@ -28,6 +28,13 @@ class Acao extends Model
         'id_grupo'
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'id_grupo',
+        'ativo'
+    ];
+
     public function grupo(){
         return $this->hasOne(Grupo::class, 'id', 'id_grupo');
     }

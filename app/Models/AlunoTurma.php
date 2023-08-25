@@ -15,6 +15,12 @@ class AlunoTurma extends Model
         'id_aluno'
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'ativo'
+    ];
+
     public function turma(){
         return $this->hasOne(Turma::class, 'id', 'id_turma');
     }
