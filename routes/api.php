@@ -7,6 +7,7 @@ use App\Http\Controllers\TipoDeUsuarioController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CursoController;
+use app\Http\Controllers\AcaoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,7 @@ use App\Http\Controllers\CursoController;
 
 Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout']);
+Route::get('acoes', ['AcaoController@capturarAcoesB3']);
 
 Route::post('importarAlunos/{turma}', [AlunoController::class, 'importarAlunos']);
 
