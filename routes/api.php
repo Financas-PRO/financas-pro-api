@@ -7,7 +7,7 @@ use App\Http\Controllers\TipoDeUsuarioController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CursoController;
-use app\Http\Controllers\AcaoController;
+use App\Http\Controllers\AcaoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +17,7 @@ use app\Http\Controllers\AcaoController;
 
 Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout']);
-Route::get('acoes', ['AcaoController@capturarAcoesB3']);
+Route::post('acoes', [AcaoController::class, 'capturarAcoesB3']);
 
 Route::post('importarAlunos/{turma}', [AlunoController::class, 'importarAlunos']);
 
@@ -33,9 +33,7 @@ Route::resources([
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth:api')->group(function () {
-
-    Route::get('cursos', [CursoController::class, 'index']);
-
+    
     Route::middleware('scope:admin')->group(function () {
     });
 

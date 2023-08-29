@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Curso;
-use Illuminate\Support\Facades\Validator;
 use stdClass;
 
 class Aluno extends Model

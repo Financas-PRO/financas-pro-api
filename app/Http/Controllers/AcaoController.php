@@ -7,27 +7,27 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAcaoRequest;
 use App\Http\Requests\UpdateAcaoRequest;
 use GuzzleHttp\Client;
-
+use App\Http\Requests\ImportarAcaoRequest;
 class AcaoController extends Controller
 {
-    public function capturarAcoesB3(){
+    public function capturarAcoesB3(ImportarAcaoRequest $request){
 
         $client = new Client();
 
-        try{
-            $response  = $client->get('https://brapi.dev/api/quote/PETR4%2C%5EBVSP?range=1d&interval=1d&fundamental=true&dividends=true
-            ');
-            // Processar e retornar os dados conforme necessário
-            $quotes = json_decode($response->getBody(), true);
-            var_dump($quotes);
-        }
-            catch(\Exception $e){
-                return response()->json(['error' =>'Erro ao acessar a API da B3, por favor, tente novamente', 500]);
-            }
+        $params = [
+            'query' => [
+                'range' => $request->only('faixa')['faixa'],
+                'interval' => $request->only('intervalo')['intervalo'],
+                'fundamental' => true,
+                'dividends' => true
+            ]
+        ];
 
-        }
-
-
+        $response  = $client->get('https://brapi.dev/api/quote/' . implode(",", $request->only('empresas')['empresas']), $params);
+         
+        return json_decode($response->getBody());
+    }
+        
     /**
      * Display a listing of the resource.
      */
