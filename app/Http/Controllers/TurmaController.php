@@ -34,7 +34,7 @@ class TurmaController extends Controller
         $turma->save();
 
         return [
-            'status' => 1,
+            'status' => true,
             'data' => $turma
         ];
     }

@@ -2,13 +2,10 @@
 
 namespace App\Exceptions;
 
-use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Routing\Router;
-use Illuminate\Contracts\Support\Responsable;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -30,7 +27,6 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
-
         });
     }
 
@@ -38,31 +34,29 @@ class Handler extends ExceptionHandler
     {
         $e = $this->prepareException($e);
 
-        switch (true){
+        switch (true) {
             case $e instanceof HttpResponseException:
                 return $e->getResponse();
                 break;
 
             case $e instanceof AuthenticationException:
-                return $this->prepararJson("O usuário não foi autorizado a realizar essa requisição." .  $request->cookie('laravel_token'), 401); 
+                return $this->prepararJson("O usuário não foi autorizado a realizar essa requisição." .  $request->cookie('laravel_token'), 401);
 
                 break;
 
             case $e instanceof ValidationException:
-                return $this->prepararJson($e->errors(), 422); 
+                return $this->prepararJson($e->errors(), 422);
 
-                break;
-
-            case $e instanceof Exception:
-                return $this->prepararJson( $e->getMessage(), 400);
                 break;
 
             default:
-                return $this->prepararJson($e->getMessage(), 500);
+                return $this->prepararJson(env("APP_DEBUG") ? $e->getMessage() : "Ocorreu um erro interno. Por favor, 
+                contate o administrador do sistema.", 500);
         }
     }
 
-    public function prepararJson($mensagem, $http){
+    public function prepararJson($mensagem, $http)
+    {
         return response()->json([
             "status" => false,
             "error" => $mensagem

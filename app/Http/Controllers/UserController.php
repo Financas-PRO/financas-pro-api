@@ -56,9 +56,16 @@ class UserController extends Controller
         if (auth()->check()) {
             auth()->user()->token()->revoke();
 
-            return response()->json(['success' => 'logout_success'], 200);
+            return response()->json([
+                'status' => false,
+                'message' => 'Desconectado com sucesso.'
+            ], 200);
+
         } else {
-            return response()->json(['error' => 'api.something_went_wrong'], 500);
+            return response()->json([
+                'status' => false,
+                'error' => 'Não foi possível revogar sua sessão. É provavél que seu token de acesso já tenha sido terminado.'
+            ], 500);
         }
     }
 }

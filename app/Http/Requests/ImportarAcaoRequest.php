@@ -27,4 +27,13 @@ class ImportarAcaoRequest extends FormRequest
             "intervalo" => "required"
         ];
     }
+
+    public function messages(): array {
+
+        return [
+            'empresas.required' => 'Por favor, envie as empresas.',
+            'faixa.required' => 'Por favor, digite a faixa.',
+            'intervalo.required' => 'Por favor, digite o intervalo.',
+        ];
+    }
 }

@@ -6,8 +6,8 @@ use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\TipoDeUsuarioController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CursoController;
 use App\Http\Controllers\AcaoController;
+use App\Http\Controllers\GrupoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +27,10 @@ Route::resources([
     'tipoDeUsuario' => TipoDeUsuarioController::class
 ]);
 
+// Rotas: grupo (apenas POST, GET e DELETE)
+Route::post('grupo/{turma}', [GrupoController::class, 'store']);
+Route::delete('grupo/{grupo}', [GrupoController::class, "destroy"]);
+
 /*
 |--------------------------------------------------------------------------
 | Rotas que necessitam de autenticação, sendo seguidas por validações de permissão do usuário
@@ -35,16 +39,20 @@ Route::resources([
 Route::middleware('auth:api')->group(function () {
     
     Route::middleware('scope:admin')->group(function () {
+
+        // Route::resources([
+        //     'turma' => TurmaController::class,
+        //     'docente' => DocenteController::class,
+        //     'tipoDeUsuario' => TipoDeUsuarioController::class,
+        //     'aluno' => AlunoController::class
+        // ]);
     });
 
-    Route::middleware('scopes:admin,coordenador')->group(function () {
-    });
-
-    Route::middleware('scopes:docencia')->group(function () {
+    Route::middleware('scope:admin,docencia')->group(function () {
         
     });
 
-    Route::middleware('scopes:admin,aluno')->group(function () {
+    Route::middleware('scope:admin,aluno')->group(function () {
     });
     
 });

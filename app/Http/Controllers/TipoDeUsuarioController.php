@@ -14,9 +14,7 @@ class TipoDeUsuarioController extends Controller
      */
     public function index()
     {
-
-        $obj = new tipoDeUsuario();
-        $docentes = $obj->all()->where('ativo', 1)->values();
+        $docentes = tipoDeUsuario::all()->where('ativo', 1)->values();
 
         return [
             "status" => true,
@@ -31,11 +29,11 @@ class TipoDeUsuarioController extends Controller
     public function store(StoreTipoDeUsuarioRequest $request)
     {
 
-        $docente = new tipoDeUsuario($request->all());
+        $docente = new tipoDeUsuario($request->only('papel'));
         $docente->save();
 
         return [
-            'status' => 1,
+            'status' => true,
             'data' => $docente
         ];
     }
@@ -57,7 +55,7 @@ class TipoDeUsuarioController extends Controller
      */
     public function update(UpdateTipoDeUsuarioRequest $request, tipoDeUsuario $tipoDeUsuario)
     {
-        $tipoDeUsuario->update($request->all());
+        $tipoDeUsuario->update($request->only('papel'));
 
         return [
             "status" => true,

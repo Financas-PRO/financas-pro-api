@@ -15,9 +15,7 @@ class DocenteController extends Controller
      */
     public function index()
     {
-
-        $obj = new Docente();
-        $docentes = $obj->all()->where('ativo', 1)->values();
+        $docentes = Docente::all()->where('ativo', 1)->values();
 
         return [
             "status" => true,
@@ -33,12 +31,12 @@ class DocenteController extends Controller
     {
         $usuario = new User($request->only('username', 'password', 'email', 'id_tipoDeUsuario'));
         $usuario->save();
-        $docente = new Docente($request->only('rg', 'cpf', 'titulacao', 'telefone', 'nome'));
+        $docente = new Docente($request->only('rg', 'cpf', 'titulacao', 'telefone', 'nome', 'matricula'));
         $docente->id_usuario = $usuario->id;
         $docente->save();
 
         return [
-            'status' => 1,
+            'status' => true,
             'data' => $docente
         ];
     }
@@ -63,7 +61,7 @@ class DocenteController extends Controller
         $usuario = User::find($docente->user->id);
 
         $usuario->update($request->only('username', 'password', 'email', 'id_tipoDeUsuario'));
-        $docente->update($request->only('rg', 'cpf', 'titulacao', 'telefone', 'nome'));
+        $docente->update($request->only('rg', 'cpf', 'titulacao', 'telefone', 'nome', 'titulacao'));
 
         return [
             "status" => true,

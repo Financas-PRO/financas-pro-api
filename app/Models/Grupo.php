@@ -24,6 +24,6 @@ class Grupo extends Model
     ];
 
     public function turma(){
-        $this->hasOne(Turma::class, 'id', 'id_turma');
+        return $this->hasOne(Turma::class, 'id', 'id_turma');
     }
 }
