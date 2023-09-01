@@ -33,7 +33,7 @@ class DocenteController extends Controller
     {
         $usuario = new User($request->only('username', 'password', 'email', 'id_tipoDeUsuario'));
         $usuario->save();
-        $docente = new Docente($request->only('rg', 'cpf', 'titulacao', 'telefone', 'nome'));
+        $docente = new Docente($request->only('rg', 'cpf', 'titulacao', 'telefone', 'nome', 'matricula'));
         $docente->id_usuario = $usuario->id;
         $docente->save();
 
