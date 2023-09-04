@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreign('id_usuario')->references('id')->on('users');
             $table->unsignedBigInteger('id_curso');
             $table->foreign('id_curso')->references('id')->on('cursos');
+            $table->unsignedBigInteger('id_disciplina');
+            $table->foreign('id_disciplina')->references('id')->on('disciplinas');
             $table->integer('termo');
             $table->timestamps();
 

@@ -8,7 +8,7 @@ use App\Models\AlunoTurma;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAlunoRequest;
 use App\Http\Requests\UpdateAlunoRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\ImportarAlunoRequest;
 
 class AlunoController extends Controller
 {
@@ -80,7 +80,7 @@ class AlunoController extends Controller
         ];
     }
 
-    public function importarAlunos(Request $request, Turma $turma)
+    public function importarAlunos(ImportarAlunoRequest $request, Turma $turma)
     {
         $model = new Aluno();
 

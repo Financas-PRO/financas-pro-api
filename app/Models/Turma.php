@@ -6,12 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Turma extends Model
 {
-
     protected $fillable = [
         'ano',
         'semestre',
-        'id_disciplina',
-        'turma'
+        'descricao',
+        'id_docente'
     ];
 
     protected $hidden = [
@@ -20,7 +19,4 @@ class Turma extends Model
         'id_disciplina'
     ];
 
-    // public function curso(){
-    //     return $this->hasOne(Curso::class, 'id', "id_curso");
-    // }
 }

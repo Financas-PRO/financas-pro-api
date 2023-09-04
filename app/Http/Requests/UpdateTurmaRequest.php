@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UpdateTurmaRequest extends FormRequest
 {
@@ -19,13 +21,37 @@ class UpdateTurmaRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
+    public function rules(Request $request): array
     {
         return [
-            'ano' => 'required|size:4',
-            'semestre' => 'required',
-            'curso' => 'required',
-            'turma' => 'required|size:1',
+            'ano' => ['required', Rule::unique('turmas')->where(function ($query) use ($request) {
+                return $query->where('turma', $request->input('turma'))
+                    ->where('ano', $request->input('ano'))
+                    ->where('semestre', $request->input('semestre'))
+                    ->where('descricao', $request->input('descricao'))
+                    ->where('id', '!=', $this->route('turma')->id);
+            }), 'size:4'],
+            'semestre' => ['required',  Rule::unique('turmas')->where(function ($query) use ($request) {
+                return $query->where('turma', $request->input('turma'))
+                    ->where('ano', $request->input('ano'))
+                    ->where('semestre', $request->input('semestre'))
+                    ->where('descricao', $request->input('descricao'))
+                    ->where('id', '!=', $this->route('turma')->id);
+            }), 'size:1'],
+            'turma' => ['required',  Rule::unique('turmas')->where(function ($query) use ($request) {
+                return $query->where('turma', $request->input('turma'))
+                    ->where('ano', $request->input('ano'))
+                    ->where('semestre', $request->input('semestre'))
+                    ->where('descricao', $request->input('descricao'))
+                    ->where('id', '!=', $this->route('turma')->id);
+            }),'size:1'],
+            'descricao' => ['required',  Rule::unique('turmas')->where(function ($query) use ($request) {
+                return $query->where('turma', $request->input('turma'))
+                    ->where('ano', $request->input('ano'))
+                    ->where('semestre', $request->input('semestre'))
+                    ->where('descricao', $request->input('descricao'))
+                    ->where('id', '!=', $this->route('turma')->id);
+            })]
         ];
     }
     public function messages(): array{
@@ -33,7 +59,6 @@ class UpdateTurmaRequest extends FormRequest
             'ano.required' => 'O ano é obrigatório.',
             'ano.size' => 'Use o ano com 4 números (Ex: 2016).',
             'semestre.required' => 'O semestre é obrigatório.',
-            'curso.required' => 'O curso é obrigatório.',
             'turma.required' => 'A turma é obrigatória.',
             'turma.size' => 'O campo turma deve ser definida com apenas 1 letra.',
         ];
