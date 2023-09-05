@@ -31,6 +31,8 @@ Route::resources([
 Route::post('grupo/{turma}', [GrupoController::class, 'store']);
 Route::delete('grupo/{grupo}', [GrupoController::class, "destroy"]);
 
+Route::get("/relacaoTurma/{turma}", [AlunoController::class, 'retornaRelacaoTurma']);
+
 /*
 |--------------------------------------------------------------------------
 | Rotas que necessitam de autenticação, sendo seguidas por validações de permissão do usuário

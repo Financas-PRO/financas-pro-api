@@ -99,4 +99,14 @@ class AlunoController extends Controller
             'alunos_importados' => $alunos
         ];
     }
+
+    public function retornaRelacaoTurma(Turma $turma){
+
+        $alunos = AlunoTurma::where("id_turma", $turma->id)->get();
+        return [
+            'status' => true,
+            'data' => $alunos
+        ];
+    }
+
 }
