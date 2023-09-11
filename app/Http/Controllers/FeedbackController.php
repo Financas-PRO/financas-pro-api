@@ -6,6 +6,7 @@ use App\Models\Feedback;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFeedbackRequest;
 use App\Http\Requests\UpdateFeedbackRequest;
+use App\Models\Grupo;
 
 class FeedbackController extends Controller
 {
@@ -26,9 +27,11 @@ class FeedbackController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFeedbackRequest $request)
+    public function store(StoreFeedbackRequest $request, Grupo $grupo)
     {
-        $feedback = Feedback::create($request->all());
+        $dados = $request->all();
+        //TODO: retirar parametro de docente no futuro, pois ele vai buscar automático pela autenticação do usuário
+        $feedback = new Feedback(['descricao' => $dados['descricao'], 'id_docente' => $dados['id_docente'], 'id_grupo' => $grupo->id]);
         $feedback->save();
         
         return [
@@ -54,7 +57,7 @@ class FeedbackController extends Controller
      */
     public function update(UpdateFeedbackRequest $request, Feedback $feedback)
     {
-        $feedback->update($request->all());
+        $feedback->update($request->only('descricao'));
 
         return [
             "status" => true,

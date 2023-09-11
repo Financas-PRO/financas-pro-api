@@ -11,7 +11,7 @@ class StoreAnaliseGrupoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class StoreAnaliseGrupoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'descricao' => 'required'
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'descricao.required' => 'Por favor, digite a análise que você chegou.'
         ];
     }
 }
