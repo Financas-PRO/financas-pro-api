@@ -8,7 +8,7 @@ use App\Models\Aluno;
 
 class AlunoTurma extends Model
 {
-    protected $with = ['turma', 'aluno'];
+    protected $with = ['aluno'];
 
     protected $fillable = [
         'id_turma',
@@ -18,7 +18,9 @@ class AlunoTurma extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'ativo'
+        'ativo',
+        'id_turma',
+        'id_aluno'
     ];
 
     public function turma(){

@@ -29,8 +29,7 @@ class TurmaController extends Controller
      */
     public function store(StoreTurmaRequest $request)
     {
-
-        $turma = Turma::create($request->all());
+        $turma = new Turma($request->only('descricao', 'semestre', 'ano', 'id_docente'));
         $turma->save();
 
         return [

@@ -17,7 +17,8 @@ class Aluno extends Model
         'ra',
         'id_usuario',
         'id_curso',
-        'termo'
+        'termo',
+        'id_disciplina'
     ];
 
     protected $hidden = [
@@ -76,6 +77,7 @@ class Aluno extends Model
         foreach ($alunos as $aluno) {
 
             $curso = DB::table('cursos')->where('curso', $aluno->curso)->first();
+            $disciplina = DB::table('disciplinas')->where('nome', $aluno->disciplina)->first();
 
             $user = (new User())->findForPassport($aluno->username);
 
@@ -89,7 +91,7 @@ class Aluno extends Model
 
                 $model_aluno = new Aluno([
                     'nome' => $aluno->nome, 'ra' => $aluno->ra, 'id_usuario' => $model_usuario->id, "id_curso" => $curso->id,
-                    'termo' => $aluno->termo
+                    'termo' => $aluno->termo, 'id_disciplina' => $disciplina->id
                 ]);
                 $model_aluno->save();
 

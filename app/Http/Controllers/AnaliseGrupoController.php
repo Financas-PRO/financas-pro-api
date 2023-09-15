@@ -6,6 +6,7 @@ use App\Models\AnaliseGrupo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAnaliseGrupoRequest;
 use App\Http\Requests\UpdateAnaliseGrupoRequest;
+use App\Models\Grupo;
 
 class AnaliseGrupoController extends Controller
 {
@@ -27,9 +28,11 @@ class AnaliseGrupoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAnaliseGrupoRequest $request)
+    public function store(StoreAnaliseGrupoRequest $request, Grupo $grupo)
     {
-        $analiseGrupo = AnaliseGrupo::create($request->all());
+
+        $dados = $request->all();
+        $analiseGrupo = new AnaliseGrupo(['descricao' => $dados['descricao'], 'id_grupo' => $grupo->id]);
         $analiseGrupo->save();
 
         return [
@@ -55,7 +58,7 @@ class AnaliseGrupoController extends Controller
      */
     public function update(UpdateAnaliseGrupoRequest $request, AnaliseGrupo $analiseGrupo)
     {
-        $analiseGrupo->update($request->all());
+        $analiseGrupo->update($request->only('descricao'));
 
         return [
             "status" => true,

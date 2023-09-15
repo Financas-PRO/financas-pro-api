@@ -11,7 +11,7 @@ class UpdateFeedbackRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,16 @@ class UpdateFeedbackRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'descricao' => 'required',
+            'id_docente' => 'required'
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'descricao.required' => 'Por favor, digite a análise que você chegou.',
+            'id_docente.required' => 'Por favor, envie o docente' //TODO: retirar validação no futuro, pois ele vai buscar automático pela autenticação do usuário
         ];
     }
 }
