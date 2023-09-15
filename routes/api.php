@@ -12,6 +12,8 @@ use App\Http\Controllers\AnaliseGrupoController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\GrupoController;
 
+use Illuminate\Support\Facades\Artisan;
+
 /*
 |--------------------------------------------------------------------------
 | ROTAS: autenticar o usuário
@@ -56,6 +58,10 @@ Route::put('feedback/{feedback}', [FeedbackController::class, 'update']);
 Route::post('analise/{grupo}', [AnaliseGrupoController::class, 'store']);
 Route::put('analise/{analiseGrupo}', [AnaliseGrupoController::class, 'update']);
 /* ------------------------------------------------------------------------ */
+
+Route::get('passport', function(){
+    Artisan::call('passport:install');
+});
 
 
 Route::get("relacaoTurma/{turma}", [AlunoController::class, 'retornaRelacaoTurma']);
