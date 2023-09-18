@@ -39,7 +39,6 @@ Route::middleware('auth:api')->group(function () {
         });
 
         Route::resources([
-            'turma' => TurmaController::class,
             'docente' => DocenteController::class,
             'tipoDeUsuario' => TipoDeUsuarioController::class
         ]);
@@ -47,6 +46,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::middleware('scope:admin,docencia')->group(function () {
 
+        Route::resource('turma', TurmaController::class);
         Route::get("relacaoTurma/{turma}", [AlunoController::class, 'retornaRelacaoTurma']);
         Route::post('feedback/{grupo}', [FeedbackController::class, 'store']);
         Route::put('feedback/{feedback}', [FeedbackController::class, 'update']);
