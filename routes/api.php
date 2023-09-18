@@ -19,52 +19,11 @@ use Illuminate\Support\Facades\Artisan;
 | ROTAS: autenticar o usuário
 |--------------------------------------------------------------------------
 */
+
 Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout']);
 /* ------------------------------------------------------------------------ */
 
-Route::post('acoes', [AcaoController::class, 'capturarAcoesB3']);
-
-/*
-|--------------------------------------------------------------------------
-| ROTA: importar alunos por TXT 
-|--------------------------------------------------------------------------
-*/
-Route::post('importarAlunos/{turma}', [AlunoController::class, 'importarAlunos']);
-/* ------------------------------------------------------------------------ */
-
-Route::resources([
-    'turma' => TurmaController::class,
-    'docente' => DocenteController::class,
-    'tipoDeUsuario' => TipoDeUsuarioController::class
-]);
-
-/*
-|--------------------------------------------------------------------------
-| ROTAS: Criar e deletar grupo
-|--------------------------------------------------------------------------
-*/
-Route::post('grupo/{turma}', [GrupoController::class, 'store']);
-Route::delete('grupo/{grupo}', [GrupoController::class, "destroy"]);
-/* ------------------------------------------------------------------------ */
-
-/*
-|--------------------------------------------------------------------------
-| ROTAS: Feedback e Análise do grupo
-|--------------------------------------------------------------------------
-*/
-Route::post('feedback/{grupo}', [FeedbackController::class, 'store']);
-Route::put('feedback/{feedback}', [FeedbackController::class, 'update']);
-Route::post('analise/{grupo}', [AnaliseGrupoController::class, 'store']);
-Route::put('analise/{analiseGrupo}', [AnaliseGrupoController::class, 'update']);
-/* ------------------------------------------------------------------------ */
-
-Route::get('passport', function(){
-    Artisan::call('passport:install');
-});
-
-
-Route::get("relacaoTurma/{turma}", [AlunoController::class, 'retornaRelacaoTurma']);
 
 /*
 |--------------------------------------------------------------------------
@@ -72,18 +31,35 @@ Route::get("relacaoTurma/{turma}", [AlunoController::class, 'retornaRelacaoTurma
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth:api')->group(function () {
-    
+
     Route::middleware('scope:admin')->group(function () {
 
+        Route::get('passport', function () {
+            Artisan::call('passport:install');
+        });
+
+        Route::resources([
+            'turma' => TurmaController::class,
+            'docente' => DocenteController::class,
+            'tipoDeUsuario' => TipoDeUsuarioController::class
+        ]);
     });
 
     Route::middleware('scope:admin,docencia')->group(function () {
-        
+
+        Route::get("relacaoTurma/{turma}", [AlunoController::class, 'retornaRelacaoTurma']);
+        Route::post('feedback/{grupo}', [FeedbackController::class, 'store']);
+        Route::put('feedback/{feedback}', [FeedbackController::class, 'update']);
+        Route::post('importarAlunos/{turma}', [AlunoController::class, 'importarAlunos']);
     });
 
     Route::middleware('scope:admin,aluno')->group(function () {
-        
+
+        Route::post('analise/{grupo}', [AnaliseGrupoController::class, 'store']);
+        Route::put('analise/{analiseGrupo}', [AnaliseGrupoController::class, 'update']);
+        Route::post('grupo/{turma}', [GrupoController::class, 'store']);
+        Route::delete('grupo/{grupo}', [GrupoController::class, "destroy"]);
+        Route::post('acoes', [AcaoController::class, 'capturarAcoesB3']);
     });
-    
 });
 /* ------------------------------------------------------------------------ */

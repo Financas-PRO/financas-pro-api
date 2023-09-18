@@ -34,7 +34,7 @@ class UserController extends Controller
                     break;
 
                 case 4:
-                    $token = $usuario->createToken('FinPro', ['coordenador'])->accessToken;
+                    $token = $usuario->createToken('FinPro', ['docencia'])->accessToken;
                     break;
             }
 
