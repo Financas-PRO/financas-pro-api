@@ -24,6 +24,9 @@ Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout']);
 /* ------------------------------------------------------------------------ */
 
+Route::get('passport', function () {
+    Artisan::call('passport:install');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -33,10 +36,6 @@ Route::post('logout', [UserController::class, 'logout']);
 Route::middleware('auth:api')->group(function () {
 
     Route::middleware('scope:admin')->group(function () {
-
-        Route::get('passport', function () {
-            Artisan::call('passport:install');
-        });
 
         Route::resources([
             'docente' => DocenteController::class,
