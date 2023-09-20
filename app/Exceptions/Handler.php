@@ -41,7 +41,7 @@ class Handler extends ExceptionHandler
                 break;
 
             case $e instanceof AuthenticationException:
-                return $this->prepararJson("O usuário não foi autorizado a realizar essa requisição." .  $request->cookie('laravel_token'), 401);
+                return $this->prepararJson("Não é possível realizar essa requisição sem uma autenticação válida." .  $request->cookie('laravel_token'), 401);
 
                 break;
 
@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
                 break;
 
             case $e instanceof AccessDeniedHttpException:
-                return $this->prepararJson("Seu usuário não tem permissão para executar essa requisição.", 401);
+                return $this->prepararJson("O usuário não tem permissão para executar essa requisição.", 403);
                 break;
 
             default:
