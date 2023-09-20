@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Artisan;
 
 Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout']);
+Route::post('acoes', [AcaoController::class, 'capturarAcoesB3']);
+
 /* ------------------------------------------------------------------------ */
 
 
@@ -41,6 +43,7 @@ Route::middleware('auth:api')->group(function () {
         Route::resources([
             'docente' => DocenteController::class,
             'tipoDeUsuario' => TipoDeUsuarioController::class
+
         ]);
     });
 
@@ -59,7 +62,6 @@ Route::middleware('auth:api')->group(function () {
         Route::put('analise/{analiseGrupo}', [AnaliseGrupoController::class, 'update']);
         Route::post('grupo/{turma}', [GrupoController::class, 'store']);
         Route::delete('grupo/{grupo}', [GrupoController::class, "destroy"]);
-        Route::post('acoes', [AcaoController::class, 'capturarAcoesB3']);
     });
 });
 /* ------------------------------------------------------------------------ */
