@@ -53,6 +53,7 @@ class AcaoController extends Controller
                     $acao->id_grupo = $idDoGrupo; // Substitua pelo ID correto do grupo
                     $acao->ativo = true; 
                     
+                    
                     $acao->save();
                 }
 
