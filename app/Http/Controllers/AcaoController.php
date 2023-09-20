@@ -50,9 +50,9 @@ class AcaoController extends Controller
                     $acao->link_logo = $apiAcao->logourl;
                     $acao->preco_lucro = $apiAcao->priceEarnings;
                     $acao->data_importacao = now(); //pegar data atual
-                    $acao->id_grupo = $idDoGrupo; // Substitua pelo ID correto do grupo
+                    $acao->id_grupo = $idDoGrupo; //tem que ver como ficará o id do grupo
                     $acao->ativo = true; 
-                    
+
                     
                     $acao->save();
                 }
