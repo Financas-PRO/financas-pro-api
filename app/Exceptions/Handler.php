@@ -7,6 +7,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Throwable;
+use Laravel\Passport\Exceptions\MissingScopeException;
 
 class Handler extends ExceptionHandler
 {
@@ -49,13 +50,17 @@ class Handler extends ExceptionHandler
 
                 break;
 
+            case $e instanceof MissingScopeException:
+                return $this->prepararJson("Seu usuário não tem permissão para executar essa requisição.", 401);
+                break;
+
             default:
                 return $this->prepararJson(env("APP_DEBUG") ? $e->getMessage() : "Ocorreu um erro interno. Por favor, 
                 contate o administrador do sistema.", 500);
         }
     }
 
-    public function prepararJson($mensagem, $http)
+    public function prepararJson(string $mensagem, int $http)
     {
         return response()->json([
             "status" => false,
