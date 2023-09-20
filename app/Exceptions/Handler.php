@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
                 break;
 
             default:
-                return $this->prepararJson(env("APP_DEBUG") ? $e->getMessage() : "Ocorreu um erro interno. Por favor, 
+                return $this->prepararJson(env("APP_DEBUG") ? $e->getMessage() . gettype($e) : "Ocorreu um erro interno. Por favor, 
                 contate o administrador do sistema.", 500);
         }
     }
