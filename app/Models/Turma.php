@@ -10,7 +10,7 @@ class Turma extends Model
         'ano',
         'semestre',
         'descricao',
-        'id_docente'
+        'id_usuario'
     ];
 
     protected $hidden = [

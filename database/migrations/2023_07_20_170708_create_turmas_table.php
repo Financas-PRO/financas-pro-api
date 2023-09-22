@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer("semestre");
             $table->string("descricao");
             $table->boolean('ativo')->default(1);
-            $table->unsignedBigInteger('id_docente');
-            $table->foreign('id_docente')->references('id')->on('docentes');
+            $table->unsignedBigInteger('id_usuario'); // Usuário que criou a turma
+            $table->foreign('id_usuario')->references('id')->on('users');
             $table->timestamps();
         });
     }

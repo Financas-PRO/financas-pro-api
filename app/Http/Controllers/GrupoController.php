@@ -17,12 +17,16 @@ class GrupoController extends Controller
      */
     public function index()
     {
-        $grupos = Grupo::all()->where('ativo', 1)->values();
+        // $grupos = Grupo::all()
+        // ->join('')
+        // ->where('ativo', 1)
+        // ->where('', 1)
+        // ->values();
 
-        return [
-            "status" => true,
-            'data' => $grupos
-        ];
+        // return [
+        //     "status" => true,
+        //     'data' => $grupos
+        // ];
     }
 
     /**

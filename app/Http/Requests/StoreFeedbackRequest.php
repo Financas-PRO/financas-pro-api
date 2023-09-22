@@ -23,7 +23,6 @@ class StoreFeedbackRequest extends FormRequest
     {
         return [
             'descricao' => 'required',
-            'id_docente' => 'required' //TODO: retirar validação no futuro, pois ele vai buscar automático pela autenticação do usuário
         ];
     }
 
@@ -31,7 +30,6 @@ class StoreFeedbackRequest extends FormRequest
     {
         return [
             'descricao.required' => 'Por favor, digite a análise que você chegou.',
-            'id_docente.required' => 'Por favor, envie o docente' //TODO: retirar validação no futuro, pois ele vai buscar automático pela autenticação do usuário
         ];
     }
 }

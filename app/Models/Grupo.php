@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Turma;
+use App\Models\Aluno;
 
 class Grupo extends Model
 {
     protected $table = 'grupos';
 
-    protected $with = ['turma'];
+    protected $with = ['turma', 'alunos'];
 
     protected $fillable = [
         'descricao',
@@ -25,5 +26,9 @@ class Grupo extends Model
 
     public function turma(){
         return $this->hasOne(Turma::class, 'id', 'id_turma');
+    }
+
+    public function alunos(){
+        return $this->hasMany(Aluno::class);
     }
 }

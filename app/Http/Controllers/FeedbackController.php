@@ -23,17 +23,20 @@ class FeedbackController extends Controller
             'data' => $feedback
         ];
     }
-    
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreFeedbackRequest $request, Grupo $grupo)
     {
         $dados = $request->all();
-        //TODO: retirar parametro de docente no futuro, pois ele vai buscar automático pela autenticação do usuário
-        $feedback = new Feedback(['descricao' => $dados['descricao'], 'id_docente' => $dados['id_docente'], 'id_grupo' => $grupo->id]);
+        $feedback = new Feedback([
+            'descricao' => $dados['descricao'],
+            'id_usuario' => auth()->user()->id,
+            'id_grupo' => $grupo->id
+        ]);
         $feedback->save();
-        
+
         return [
             'status' => 1,
             'data' => $feedback
@@ -57,7 +60,12 @@ class FeedbackController extends Controller
      */
     public function update(UpdateFeedbackRequest $request, Feedback $feedback)
     {
-        $feedback->update($request->only('descricao'));
+        $dados = $request->all();
+
+        $feedback->update([
+            'descricao' => $dados['descricao'],
+            'id_usuario' => auth()->user()->id
+        ]);
 
         return [
             "status" => true,
@@ -77,6 +85,5 @@ class FeedbackController extends Controller
             "status" => true,
             "data" => $feedback
         ];
-
     }
 }

@@ -29,7 +29,13 @@ class TurmaController extends Controller
      */
     public function store(StoreTurmaRequest $request)
     {
-        $turma = new Turma($request->only('descricao', 'semestre', 'ano', 'id_docente'));
+        
+        $turma = new Turma([
+            'descricao' => $request->descricao,
+            'semestre' => $request->semestre,
+            'ano' => $request->ano,
+            'id_usuario' => auth()->user()->id
+        ]);
         $turma->save();
 
         return [
@@ -55,7 +61,12 @@ class TurmaController extends Controller
      */
     public function update(UpdateTurmaRequest $request, Turma $turma)
     {
-        $turma->update($request->all());
+        $turma->update([
+            'descricao' => $request->descricao,
+            'semestre' => $request->semestre,
+            'ano' => $request->ano,
+            'id_usuario' => auth()->user()->id
+        ]);
 
         return [
             "status" => true,

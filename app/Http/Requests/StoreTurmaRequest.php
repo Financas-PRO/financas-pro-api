@@ -50,7 +50,6 @@ class StoreTurmaRequest extends FormRequest
             'ano.size' => 'Use o ano com 4 números (Ex: 2016).',
             'semestre.required' => 'O semestre é obrigatório.',
             'semestre.size' => 'O semestre deve conter apenas um número.',
-            'id_curso.required' => 'O id_curso é obrigatório.',
             'turma.required' => 'A turma é obrigatória.',
             'turma.size' => 'O campo turma deve ser definida com apenas 1 letra.',
         ];

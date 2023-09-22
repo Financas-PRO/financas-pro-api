@@ -28,6 +28,11 @@ Route::get('passport', function () {
     Artisan::call('passport:install');
 });
 
+// Route::resources([
+//     'docente' => DocenteController::class,
+//     'tipoDeUsuario' => TipoDeUsuarioController::class
+// ]);
+
 /*
 |--------------------------------------------------------------------------
 | MIDDLEWARE: autenticação, sendo seguidas por validações de permissão do usuário.
