@@ -60,7 +60,7 @@ class Handler extends ExceptionHandler
         }
     }
 
-    public function prepararJson(string $mensagem, int $http)
+    public function prepararJson(string|array $mensagem, int $http)
     {
         return response()->json([
             "status" => false,

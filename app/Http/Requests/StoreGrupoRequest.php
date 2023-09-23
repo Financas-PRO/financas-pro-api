@@ -22,7 +22,8 @@ class StoreGrupoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'alunos' => 'required|array',
+            'descricao' => 'required'
         ];
     }
 }

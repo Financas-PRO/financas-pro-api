@@ -22,7 +22,7 @@ class StoreDisciplinaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nome' => 'required|unique:disciplinas,nome'
         ];
     }
 }

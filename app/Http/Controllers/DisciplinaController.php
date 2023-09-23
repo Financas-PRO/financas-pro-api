@@ -8,20 +8,17 @@ use App\Models\Disciplina;
 
 class DisciplinaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $obj = new Disciplina();
+        $disciplina = $obj->all()->where('ativo', 1)->values();
+
+        return [
+            "status" => true,
+            'data' => $disciplina
+        ];
+
     }
 
     /**
@@ -29,7 +26,13 @@ class DisciplinaController extends Controller
      */
     public function store(StoreDisciplinaRequest $request)
     {
-        //
+        $disciplina = new Disciplina($request->only('curso'));
+        $disciplina->save();
+
+        return [
+            'status' => true,
+            'data' => $disciplina
+        ];
     }
 
     /**
@@ -37,15 +40,10 @@ class DisciplinaController extends Controller
      */
     public function show(Disciplina $disciplina)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Disciplina $disciplina)
-    {
-        //
+        return [
+            'status' => true,
+            'data' => $disciplina
+        ];
     }
 
     /**
@@ -53,7 +51,12 @@ class DisciplinaController extends Controller
      */
     public function update(UpdateDisciplinaRequest $request, Disciplina $disciplina)
     {
-        //
+        $disciplina->update($request->only('nome'));
+
+        return [
+            "status" => true,
+            "data" => $disciplina
+        ];
     }
 
     /**
@@ -61,6 +64,13 @@ class DisciplinaController extends Controller
      */
     public function destroy(Disciplina $disciplina)
     {
-        //
+        $disciplina->ativo = 0;
+
+        $disciplina->update();
+
+        return [
+            "status" => true,
+            "data" => $disciplina
+        ];
     }
 }

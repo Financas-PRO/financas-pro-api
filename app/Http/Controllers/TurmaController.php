@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTurmaRequest;
 use App\Http\Requests\UpdateTurmaRequest;
+use App\Models\AlunoTurma;
 use App\Models\Turma;
+use App\Models\Docente;
+use App\Models\Aluno;
 
 class TurmaController extends Controller
 {
@@ -14,13 +17,23 @@ class TurmaController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->id_tipoDeUsuario == 3) {
 
-        $obj = new Turma();
-        $turma = $obj->all()->where('ativo', 1)->values();
+            $turmas = AlunoTurma::with('turma')
+                ->where('ativo', 1)
+                ->where('id_aluno', (Aluno::where('id_usuario', auth()->id())->first())->id)
+                ->get()
+                ->pluck('turma');
+        } else {
+            $turmas = Turma::all()
+                ->where('ativo', 1)
+                ->where('id_docente', (Docente::where('id_usuario', auth()->id())->first())->id)
+                ->values();
+        }
 
         return [
             "status" => true,
-            'data' => $turma
+            'data' => $turmas
         ];
     }
 
@@ -29,7 +42,13 @@ class TurmaController extends Controller
      */
     public function store(StoreTurmaRequest $request)
     {
-        $turma = new Turma($request->only('descricao', 'semestre', 'ano', 'id_docente'));
+        $dados = $request->all();
+        $turma = new Turma([
+            'descricao' => $dados['descricao'],
+            'semestre' => $dados['semestre'],
+            'ano' => $dados['ano'],
+            'id_docente' => (Docente::where('id_usuario', auth()->id())->first())->id
+        ]);
         $turma->save();
 
         return [
