@@ -24,8 +24,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         Passport::tokensCan([
             'admin' => 'Acesso a todas as funcionalidades',
-            'docencia' => 'Acesso as funcionalidades de professor',
-            'alunos' => 'Acesso as funcionalidades de aluno',
+            'docencia' => 'Acesso as funcionalidades de professor.',
+            'aluno' => 'Acesso as funcionalidades de aluno.',
             'coordenador' => 'Acesso as funcionalidades de coordenador'
         ]);
     }

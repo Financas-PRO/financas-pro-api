@@ -7,6 +7,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Throwable;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -40,7 +41,7 @@ class Handler extends ExceptionHandler
                 break;
 
             case $e instanceof AuthenticationException:
-                return $this->prepararJson("O usuário não foi autorizado a realizar essa requisição." .  $request->cookie('laravel_token'), 401);
+                return $this->prepararJson("Não é possível realizar essa requisição sem uma autenticação válida." .  $request->cookie('laravel_token'), 401);
 
                 break;
 
@@ -49,13 +50,17 @@ class Handler extends ExceptionHandler
 
                 break;
 
+            case $e instanceof AccessDeniedHttpException:
+                return $this->prepararJson("O usuário não tem permissão para executar essa requisição.", 403);
+                break;
+
             default:
                 return $this->prepararJson(env("APP_DEBUG") ? $e->getMessage() : "Ocorreu um erro interno. Por favor, 
                 contate o administrador do sistema.", 500);
         }
     }
 
-    public function prepararJson($mensagem, $http)
+    public function prepararJson(string|array $mensagem, int $http)
     {
         return response()->json([
             "status" => false,

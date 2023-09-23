@@ -17,7 +17,11 @@ class GrupoController extends Controller
      */
     public function index()
     {
-        $grupos = Grupo::all()->where('ativo', 1)->values();
+        $grupos = alunoGrupo::with('grupo')
+        ->where('ativo', 1)
+        ->where('id_aluno', (Aluno::where('id_usuario', auth()->id())->first())->id)
+        ->get()
+        ->pluck('grupo');
 
         return [
             "status" => true,
