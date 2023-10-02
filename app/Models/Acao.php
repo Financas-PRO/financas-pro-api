@@ -9,6 +9,8 @@ class Acao extends Model
 {
     protected $with = ['grupo'];
 
+    protected $table = 'acoes';
+
     protected $fillable = [
         'simbolo',
         'nome_curto',
@@ -37,9 +39,5 @@ class Acao extends Model
 
     public function grupo(){
         return $this->hasOne(Grupo::class, 'id', 'id_grupo');
-    }
-
-    protected function importarDados(){
-        
     }
 }
