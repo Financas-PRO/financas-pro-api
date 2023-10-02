@@ -3,68 +3,72 @@
 namespace App\Http\Controllers;
 
 use App\Models\Acao;
+use App\Models\Grupo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAcaoRequest;
 use App\Http\Requests\UpdateAcaoRequest;
-use GuzzleHttp\Client;
 use App\Http\Requests\ImportarAcaoRequest;
 
 class AcaoController extends Controller
 {
-    
-
-    public function capturarAcoesB3(ImportarAcaoRequest $request)
+    public function capturarAcoesB3(ImportarAcaoRequest $request, Grupo $grupo)
     {
-        try {
-            $client = new Client();
 
-            $params = [
-                'query' => [
-                    'range' => $request->only('faixa')['faixa'],
-                    'interval' => $request->only('intervalo')['intervalo'],
-                    'fundamental' => true,
-                    'dividends' => true
-                ]
-            ];
+        $client = curl_init();
 
-            $response = $client->get('https://brapi.dev/api/quote/' . implode(",", $request->only('empresas')['empresas']), $params);
+        $params = [
+            'query' => [
+                'range' => $request->only('faixa')['faixa'],
+                'interval' => $request->only('intervalo')['intervalo'],
+                'fundamental' => true,
+                'dividends' => true
+            ]
+        ];
 
-            if ($response->getStatusCode() === 200) {
-                $apiData = json_decode($response->getBody());
+        curl_setopt_array($client, [
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_URL => 'https://brapi.dev/api/quote/' .
+            implode(",", $request->only('empresas')['empresas']) .
+            '?' . http_build_query($params),
+        ]);
 
-                // Itera sobre os dados da API para mapear e salvar no banco de dados
-                foreach ($apiData as $apiAcao) {
-                    $acao = new Acao();
-                    $acao->simbolo = $apiAcao->symbol;
-                    $acao->nome_curto = $apiAcao->shortName;
-                    $acao->nome_completo = $apiAcao->longName;
-                    $acao->preco_merc_regular = $apiAcao->regularMarketPrice;
-                    $acao->alto_merc_regular = $apiAcao->regularMarketDayHigh;
-                    $acao->baixo_merc_regular = $apiAcao->regularMarketDayLow;
-                    $acao->intervalo_merc_regular = $apiAcao->regularMarketDayRange;
-                    $acao->variacao_merc_regular = $apiAcao->regularMarketChange;
-                    $acao->valor_merc = $apiAcao->marketCap;
-                    $acao->volume_merc_regular = $apiAcao->regularMarketVolume;
-                    $acao->fecha_ant_merc_regular = $apiAcao->regularMarketPreviousClose;
-                    $acao->abertura_merc_regular = $apiAcao->regularMarketOpen;
-                    $acao->link_logo = $apiAcao->logourl;
-                    $acao->preco_lucro = $apiAcao->priceEarnings;
-                    $acao->data_importacao = now(); //pegar data atual
-                    $acao->id_grupo = $idDoGrupo; //tem que ver como ficará o id do grupo
-                    $acao->ativo = true; 
+        $response = curl_exec($client);
 
-                    
-                    $acao->save();
-                }
+        $apiData = json_decode($response);
 
-                
-                return response()->json(['message' => 'Ações importadas com sucesso']);
-            } else {             
-                return response()->json(['error' => 'Erro na solicitação da API'], 500);
-            }
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+        $acoes = [];
+
+        curl_close($client);
+
+        foreach ($apiData->results as $apiAcao) {
+            $acao = new Acao([
+                'simbolo' => $apiAcao->symbol,
+                'nome_curto' => $apiAcao->shortName,
+                'nome_completo' => $apiAcao->longName,
+                'preco_merc_regular' => $apiAcao->regularMarketPrice,
+                'alto_merc_regular' => $apiAcao->regularMarketDayHigh,
+                'baixo_merc_regular' => $apiAcao->regularMarketDayLow,
+                'intervalo_merc_regular' => $apiAcao->regularMarketDayRange,
+                'variacao_merc_regular' => $apiAcao->regularMarketChange,
+                'valor_merc' => $apiAcao->marketCap,
+                'volume_merc_regular' => $apiAcao->regularMarketVolume,
+                'fecha_ant_merc_regular' => $apiAcao->regularMarketPreviousClose,
+                'abertura_merc_regular' => $apiAcao->regularMarketOpen,
+                'link_logo' => $apiAcao->logourl,
+                'preco_lucro' => $apiAcao->priceEarnings,
+                'data_importacao' => now(),
+                'id_grupo' => $grupo->id
+            ]);
+            $acao->save();
+            array_push($acoes, $acao);
         }
+
+        return [
+            'status' => true,
+            'dados_importados' => $acoes
+        ];
     }
 
 
@@ -102,34 +106,6 @@ class AcaoController extends Controller
      */
     public function show(Acao $acao)
     {
-        return [
-            "status" => true,
-            "data" => $acao
-        ];
-    }
-
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateAcaoRequest $request, Acao $acao)
-    {
-        $acao->update($request->all());
-
-        return [
-            "status" => true,
-            "data" => $acao
-        ];
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Acao $acao)
-    {
-        $acao->ativo = 0;
-        $acao->update();
-
         return [
             "status" => true,
             "data" => $acao

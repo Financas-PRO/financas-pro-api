@@ -71,7 +71,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('grupo/{turma}', [GrupoController::class, 'store']);
         Route::delete('grupo/{grupo}', [GrupoController::class, "destroy"]);
         Route::get('grupo/{turma}', [GrupoController::class, 'index']);
-        Route::post('acoes', [AcaoController::class, 'capturarAcoesB3']);
+        Route::post('acoes/{grupo}', [AcaoController::class, 'capturarAcoesB3']);
     });
 });
 /* ------------------------------------------------------------------------ */
