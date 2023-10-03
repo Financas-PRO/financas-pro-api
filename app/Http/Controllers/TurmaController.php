@@ -23,7 +23,8 @@ class TurmaController extends Controller
                 ->where('ativo', 1)
                 ->where('id_aluno', (Aluno::where('id_usuario', auth()->id())->first())->id)
                 ->get()
-                ->pluck('turma');
+                ->pluck('turma')
+                ->values();
         } else {
             $turmas = Turma::all()
                 ->where('ativo', 1)
