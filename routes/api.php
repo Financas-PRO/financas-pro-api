@@ -13,7 +13,7 @@ use App\Http\Controllers\CursoController;
 use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\GrupoController;
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -39,6 +39,10 @@ Route::middleware('auth:api')->group(function () {
 
     Route::middleware('scope:admin')->group(function () {
 
+        Route::get("scopeAdmin", function(Request $request){
+            return auth()->user();
+        });
+
         Route::resources([
             'tipoDeUsuario' => TipoDeUsuarioController::class,
             'disciplina' => DisciplinaController::class,
@@ -49,6 +53,10 @@ Route::middleware('auth:api')->group(function () {
 
     Route::middleware('scope:admin,docencia')->group(function () {
 
+        Route::get("scopeDoc", function(Request $request){
+            return auth()->user();
+        });
+
         Route::resource('turma', TurmaController::class);
         Route::get("relacaoTurma/{turma}", [AlunoController::class, 'retornaRelacaoTurma']);
         Route::post('feedback/{grupo}', [FeedbackController::class, 'store']);
@@ -57,13 +65,21 @@ Route::middleware('auth:api')->group(function () {
 
     });
 
-    Route::middleware('scope:admin,coordenador')->group(function () {
+    Route::middleware('scope:admin,coordenador')->group(function () 
+    {
+        Route::get("scopeCoord", function(Request $request){
+            return auth()->user();
+        });
 
         Route::resource('docente', DocenteController::class);
 
     });
 
     Route::middleware('scope:admin,aluno')->group(function () {
+
+        Route::get("scopeAluno", function(Request $request){
+            return auth()->user();
+        });
 
         Route::get('turma', [TurmaController::class, 'index']);
         Route::post('analise/{grupo}', [AnaliseGrupoController::class, 'store']);
