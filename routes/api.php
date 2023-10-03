@@ -58,7 +58,6 @@ Route::middleware('auth:api')->group(function () {
         });
 
         Route::resource('turma', TurmaController::class);
-        Route::get("relacaoTurma/{turma}", [AlunoController::class, 'retornaRelacaoTurma']);
         Route::post('feedback/{grupo}', [FeedbackController::class, 'store']);
         Route::put('feedback/{feedback}', [FeedbackController::class, 'update']);
         Route::post('importarAlunos/{turma}', [AlunoController::class, 'importarAlunos']);
@@ -88,6 +87,10 @@ Route::middleware('auth:api')->group(function () {
         Route::delete('grupo/{grupo}', [GrupoController::class, "destroy"]);
         Route::get('grupo/{turma}', [GrupoController::class, 'index']);
         Route::post('acoes/{grupo}', [AcaoController::class, 'capturarAcoesB3']);
+    });
+
+    Route::middleware('scope:admin,aluno,docencia')->group(function (){
+        Route::get("relacaoTurma/{turma}", [AlunoController::class, 'retornaRelacaoTurma']);
     });
 });
 /* ------------------------------------------------------------------------ */
