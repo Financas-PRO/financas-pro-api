@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('jornadas', function (Blueprint $table) {
             $table->id();
-            $table->string('nome', 40);
+            $table->longText('payload');
             $table->unsignedBigInteger('id_grupo');
             $table->foreign('id_grupo')->references('id')->on('grupos');
             $table->integer('etapa');

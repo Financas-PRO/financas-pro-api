@@ -23,9 +23,17 @@ class GrupoController extends Controller
         ->get()
         ->pluck('grupo');
 
+        foreach ($grupos as $grupo){
+            $grupo->alunos = alunoGrupo::with('aluno')
+            ->where('ativo', 1)
+            ->where('id_grupo', $grupo->id)
+            ->get()
+            ->pluck('aluno');
+        }
+
         return [
             "status" => true,
-            'data' => $grupos
+            'grupo' => $grupos
         ];
     }
 
