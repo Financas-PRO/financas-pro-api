@@ -39,7 +39,8 @@ class UserController extends Controller
             }
 
             return response()->json([
-                "status" => true
+                "status" => true,
+                "scope" => auth()->user()->tipoDeUsuario->papel
             ], 200)->withCookie(cookie('laravel_token', $token, 0, null, null, true, true, false, "None"));
 
         } else {
