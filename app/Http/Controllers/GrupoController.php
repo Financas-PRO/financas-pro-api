@@ -33,7 +33,7 @@ class GrupoController extends Controller
 
         return [
             "status" => true,
-            'grupo' => $grupos
+            'data' => $grupos
         ];
     }
 
