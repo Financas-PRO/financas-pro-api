@@ -15,13 +15,22 @@ class GrupoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Turma $turma)
     {
-        $grupos = alunoGrupo::with('grupo')
-        ->where('ativo', 1)
-        ->where('id_aluno', (Aluno::where('id_usuario', auth()->id())->first())->id)
-        ->get()
-        ->pluck('grupo');
+        if (auth()->user()->id_tipoDeUsuario == 3) {
+
+            $grupos = alunoGrupo::whereRelation('grupos', 'id_turma', '=', $turma->id)
+                ->where('ativo', 1)
+                ->where('id_aluno', (Aluno::where('id_usuario', auth()->id())->first())->id)
+                ->get()
+                ->pluck('grupo');
+                
+        } else {
+            $grupos = Grupo::all()
+                ->where('ativo', 1)
+                ->where('id_turma', $turma->id)
+                ->values();
+        }
 
         foreach ($grupos as $grupo){
             $grupo->alunos = alunoGrupo::with('aluno')
