@@ -68,14 +68,13 @@ Route::middleware('auth:api')->group(function () {
         Route::put('analise/{analiseGrupo}', [AnaliseGrupoController::class, 'update']);
         Route::post('grupo/{turma}', [GrupoController::class, 'store']);
         Route::delete('grupo/{grupo}', [GrupoController::class, 'destroy']);
-        Route::get('grupo/{turma}', [GrupoController::class, 'index']);
         Route::post('acoes/{grupo}', [AcaoController::class, 'capturarAcoesB3']);
 
     });
 
+    Route::get('grupo/{turma}', [GrupoController::class, 'index']);
     Route::get("relacaoTurma/{turma}", [AlunoController::class, 'retornaRelacaoTurma']);
     Route::get('turma', [TurmaController::class, 'index']);
-
 
 });
 /* ------------------------------------------------------------------------ */
