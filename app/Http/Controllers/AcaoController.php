@@ -17,12 +17,11 @@ class AcaoController extends Controller
         $client = curl_init();
 
         $params = [
-            'query' => [
-                'range' => $request->only('faixa')['faixa'],
-                'interval' => $request->only('intervalo')['intervalo'],
-                'fundamental' => true,
-                'dividends' => true
-            ]
+            'range' => $request->only('faixa')['faixa'],
+            'interval' => $request->only('intervalo')['intervalo'],
+            'fundamental' => true,
+            'dividends' => true,
+            'token' => env('BRAPI_TOKEN')
         ];
 
         curl_setopt_array($client, [
@@ -75,10 +74,11 @@ class AcaoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Grupo $grupo)
     {
-        $obj = new Acao();
-        $acoes = $obj->all()->where('ativo', 1)->values();
+        $acoes = Acao::all()
+            ->where('id_grupo', $grupo->id) 
+            ->values();
 
         return [
             "status" => true,
