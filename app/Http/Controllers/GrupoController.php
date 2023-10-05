@@ -19,7 +19,7 @@ class GrupoController extends Controller
     {
         if (auth()->user()->id_tipoDeUsuario == 3) {
 
-            $grupos = alunoGrupo::whereRelation('grupos', 'id_turma', '=', $turma->id)
+            $grupos = alunoGrupo::whereRelation('grupo', 'id_turma', '=', $turma->id)
                 ->where('ativo', 1)
                 ->where('id_aluno', (Aluno::where('id_usuario', auth()->id())->first())->id)
                 ->get()
