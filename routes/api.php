@@ -30,6 +30,10 @@ Route::post('logout', [UserController::class, 'logout']);
 */
 Route::middleware('auth:api')->group(function () {
 
+    Route::get("checkAuth", function(){
+        return auth()->user();
+    });
+
     Route::middleware('scope:admin')->group(function () { // Rotas protegidas por permissões. Apenas administradores.
 
         Route::get("scopeAdmin", function(){
