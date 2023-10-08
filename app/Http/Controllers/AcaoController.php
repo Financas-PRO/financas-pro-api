@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAcaoRequest;
 use App\Http\Requests\UpdateAcaoRequest;
 use App\Http\Requests\ImportarAcaoRequest;
+use App\Models\Dividendo;
 
 class AcaoController extends Controller
 {
@@ -19,18 +20,20 @@ class AcaoController extends Controller
         $params = [
             'range' => $request->only('faixa')['faixa'],
             'interval' => $request->only('intervalo')['intervalo'],
-            'fundamental' => true,
-            'dividends' => true,
+            'fundamental' => 'true',
+            'dividends' => 'true',
             'token' => env('BRAPI_TOKEN')
         ];
+
+        $curl_url = 'https://brapi.dev/api/quote/' .
+        implode(",", $request->only('empresas')['empresas']) .
+        '?' . http_build_query($params);
 
         curl_setopt_array($client, [
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_URL => 'https://brapi.dev/api/quote/' .
-            implode(",", $request->only('empresas')['empresas']) .
-            '?' . http_build_query($params),
+            CURLOPT_URL => $curl_url
         ]);
 
         $response = curl_exec($client);
@@ -42,6 +45,7 @@ class AcaoController extends Controller
         curl_close($client);
 
         foreach ($apiData->results as $apiAcao) {
+
             $acao = new Acao([
                 'simbolo' => $apiAcao->symbol,
                 'nome_curto' => $apiAcao->shortName,
@@ -55,12 +59,28 @@ class AcaoController extends Controller
                 'volume_merc_regular' => $apiAcao->regularMarketVolume,
                 'fecha_ant_merc_regular' => $apiAcao->regularMarketPreviousClose,
                 'abertura_merc_regular' => $apiAcao->regularMarketOpen,
-                'link_logo' => $apiAcao->logourl,
+                'link_logo' => $apiAcao->logourl ? $apiAcao->logourl : "",
                 'preco_lucro' => $apiAcao->priceEarnings,
                 'data_importacao' => now(),
                 'id_grupo' => $grupo->id
             ]);
+
             $acao->save();
+
+            foreach ($apiAcao->dividendsData->cashDividends as $dividendo) {
+
+                $dividendo = new Dividendo([
+                    'ativo_emitido' => $dividendo->assetIssued,
+                    'taxa' => $dividendo->rate,
+                    'relacionado' => $dividendo->relatedTo,
+                    'rotulo' => $dividendo->label,
+                    'codigoISIN'=> $dividendo->isinCode,
+                    'id_acao' => $acao->id
+                ]);
+
+                $dividendo->save();
+            }
+
             array_push($acoes, $acao);
         }
 

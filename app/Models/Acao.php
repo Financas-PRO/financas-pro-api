@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Grupo;
+use App\Models\Dividendo;
 
 class Acao extends Model
 {
-    protected $with = ['grupo'];
+    protected $with = ['grupo', 'dividendos'];
 
     protected $table = 'acoes';
 
@@ -39,5 +40,9 @@ class Acao extends Model
 
     public function grupo(){
         return $this->hasOne(Grupo::class, 'id', 'id_grupo');
+    }
+
+    public function dividendos(){
+        return $this->hasMany(Dividendo::class, 'id_acao', 'id');
     }
 }

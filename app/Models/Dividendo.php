@@ -26,6 +26,7 @@ class Dividendo extends Model
     ];
 
     public function acao(){
-        return $this->hasOne(Acao::class, 'id', 'id_acao');
+        return $this->belongsTo(Acao::class);
     }
+    
 }
