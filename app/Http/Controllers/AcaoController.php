@@ -35,7 +35,7 @@ class AcaoController extends Controller
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_URL => $curl_url
         ]);
-
+        
         $response = curl_exec($client);
 
         $apiData = json_decode($response);
