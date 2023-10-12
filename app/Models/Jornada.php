@@ -12,7 +12,7 @@ class Jornada extends Model
     protected $with = ['grupo'];
 
     protected $fillable = [
-        'nome',
+        'payload',
         'id_grupo',
         'etapa'
     ];

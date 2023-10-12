@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Grupo;
 use App\Models\Jornada;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreJornadaRequest;
@@ -26,9 +27,10 @@ class JornadaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreJornadaRequest $request)
+    public function store(StoreJornadaRequest $request, Grupo $grupo)
     {
-        $jornada = Jornada::create($request->all());
+        $dados = $request->all();
+        $jornada = new Jornada(['payload' => $dados['payload'], 'etapa' => $dados['etapa'],'id_grupo' => $grupo->id]);
         $jornada->save();
         
         return [

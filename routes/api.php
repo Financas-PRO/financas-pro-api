@@ -13,12 +13,14 @@ use App\Http\Controllers\CursoController;
 use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\GrupoController;
+use App\Http\Controllers\JornadaController;
 
 /*
 |--------------------------------------------------------------------------
 | ROTAS: autenticar o usuário
 |--------------------------------------------------------------------------
 */
+Route::post('criarjornada/{id_grupo}', [JornadaController::class, 'store'])->withoutMiddleware('auth');
 Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout']);
 /* ------------------------------------------------------------------------ */
