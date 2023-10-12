@@ -12,7 +12,7 @@ class Jornada extends Model
     protected $with = ['grupo'];
 
     protected $fillable = [
-        'nome',
+        'payload',
         'id_grupo',
         'etapa'
     ];
@@ -25,6 +25,6 @@ class Jornada extends Model
     ];
 
     public function grupo(){
-        return $this->hasOne(Grupo::class, 'id', 'id_grupo');
+        return $this->belongsTo(Grupo::class);
     }
 }

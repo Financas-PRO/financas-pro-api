@@ -13,6 +13,7 @@ use App\Http\Controllers\CursoController;
 use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\GrupoController;
+use App\Http\Controllers\JornadaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +81,10 @@ Route::middleware('auth:api')->group(function () {
     Route::get("relacaoTurma/{turma}", [AlunoController::class, 'retornaRelacaoTurma']);
     Route::get('turma', [TurmaController::class, 'index']);
     Route::get('acoes/{grupo}', [AcaoController::class, 'index']);
+    
+    Route::post('jornada/{grupo}', [JornadaController::class, 'store']);
+    Route::get('jornada/{jornada}', [JornadaController::class, 'show']);
+    Route::put('jornada/{jornada}', [JornadaController::class, 'update']);
 
 });
 /* ------------------------------------------------------------------------ */

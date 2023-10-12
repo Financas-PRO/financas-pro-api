@@ -9,7 +9,7 @@ class Grupo extends Model
 {
     protected $table = 'grupos';
 
-    protected $with = ['turma'];
+    protected $with = ['turma', 'jornada'];
 
     protected $fillable = [
         'descricao',
@@ -25,5 +25,9 @@ class Grupo extends Model
 
     public function turma(){
         return $this->hasOne(Turma::class, 'id', 'id_turma');
+    }
+
+    public function jornada(){
+        return $this->hasOne(Jornada::class, 'id');
     }
 }

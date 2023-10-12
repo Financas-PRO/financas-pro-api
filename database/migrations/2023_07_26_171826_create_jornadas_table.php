@@ -16,7 +16,7 @@ return new class extends Migration
             $table->longText('payload');
             $table->unsignedBigInteger('id_grupo');
             $table->foreign('id_grupo')->references('id')->on('grupos');
-            $table->integer('etapa');
+            $table->string('etapa');
             $table->boolean("ativo")->default(1);
             $table->timestamps();
         });
