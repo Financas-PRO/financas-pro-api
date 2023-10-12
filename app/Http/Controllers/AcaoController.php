@@ -8,7 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAcaoRequest;
 use App\Http\Requests\UpdateAcaoRequest;
 use App\Http\Requests\ImportarAcaoRequest;
+use App\Models\AcaoHistorico;
 use App\Models\Dividendo;
+use Illuminate\Support\Carbon;
 
 class AcaoController extends Controller
 {
@@ -79,6 +81,21 @@ class AcaoController extends Controller
                 ]);
 
                 $dividendo->save();
+            }
+
+            foreach ($apiAcao->historicalDataPrice as $historico){
+                
+                $historico = new AcaoHistorico([
+                    'data_acao' => Carbon::createFromTimestamp($historico->date)->format('Y-m-d'),
+                    'preco_abertura' => $historico->open,
+                    'preco_mais_alto' => $historico->high,
+                    'preco_mais_baixo' => $historico->low,
+                    'preco_fechamento' => $historico->close,
+                    'preco_fechamento_ajustado' => $historico->adjustedClose,
+                    'id_acao' => $acao->id
+                ]);
+
+                $historico->save();
             }
 
             array_push($acoes, $acao);

@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Grupo;
 use App\Models\Dividendo;
+use App\Models\AcaoHistorico;
 
 class Acao extends Model
 {
-    protected $with = ['grupo', 'dividendos'];
+    protected $with = ['grupo', 'dividendos', 'historico'];
 
     protected $table = 'acoes';
 
@@ -44,5 +45,9 @@ class Acao extends Model
 
     public function dividendos(){
         return $this->hasMany(Dividendo::class, 'id_acao', 'id');
+    }
+
+    public function historico(){
+        return $this->hasMany(AcaoHistorico::class, 'id_acao', 'id');
     }
 }
