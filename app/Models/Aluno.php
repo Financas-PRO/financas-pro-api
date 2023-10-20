@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Mail\EnviarCredenciaisEmail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Curso;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use stdClass;
 
 class Aluno extends Model
@@ -96,11 +99,10 @@ class Aluno extends Model
                 $model_aluno->save();
 
                 array_push($importados, Aluno::find($model_aluno->id));
-
             } else {
                 array_push($importados, $this->atualizarAluno($aluno, $curso->id));
             }
-        };
+        }
 
         return $importados;
     }
@@ -113,7 +115,28 @@ class Aluno extends Model
         return $nome[0] . $nome[1] . "@" . $ra;
     }
 
-    private function atualizarAluno($aluno, $cursoid){
+    public function enviarEmail()
+    {
+        
+        $senha = $this->gerarSenha(["nome" => $this->nome, "ra" => $this->ra]);
+
+        $data = [
+            'username' => $this->user->username,
+            'password' => $senha,
+        ];
+
+        $destinatario = $this->user->email;
+
+        if ($destinatario) {
+            Mail::to($destinatario)->send(new EnviarCredenciaisEmail($data));
+        } else {
+            Log::error('Endereço de e-mail não disponível para o aluno' . $this->id);
+        }
+    }
+
+
+    private function atualizarAluno($aluno, $cursoid)
+    {
 
         $model_usuario = User::where("username", $aluno->username)->first();
         $model_aluno = Aluno::where("id_usuario", $model_usuario->id)->first();
@@ -121,6 +144,5 @@ class Aluno extends Model
         $model_aluno->update(["id_curso" => $cursoid, 'termo' => $aluno->termo]);
 
         return $model_aluno;
-
     }
 }
