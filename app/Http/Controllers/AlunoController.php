@@ -92,7 +92,7 @@ class AlunoController extends Controller
 
             $aluno_turma = new AlunoTurma(["id_turma" => $turma->id, "id_aluno" => $aluno->id]);
             $aluno_turma->save();
-            $model->enviarEmail();
+            $model->enviarEmail($aluno);
         }
         
         return [

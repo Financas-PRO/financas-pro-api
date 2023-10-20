@@ -14,12 +14,30 @@ use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\JornadaController;
+use App\Mail\EnviarCredenciaisEmail;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
 | ROTAS: autenticar o usuário
 |--------------------------------------------------------------------------
 */
+Route::get('/testarEmail', function () {
+    // Dados de teste para enviar o e-mail
+    $data = [
+        'username' => 'felipe',
+        'password' => '5599',
+    ];
+
+    // Endereço de e-mail para onde o e-mail de teste será enviado
+    $destinatario = 'frsilveira20@gmail.com';
+
+    // Envie o e-mail usando a classe de envio do Laravel
+    Mail::to($destinatario)->send(new EnviarCredenciaisEmail($data));
+
+    return 'E-mail de teste enviado com sucesso!';
+});
+
 Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout']);
 /* ------------------------------------------------------------------------ */

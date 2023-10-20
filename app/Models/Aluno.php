@@ -115,7 +115,7 @@ class Aluno extends Model
         return $nome[0] . $nome[1] . "@" . $ra;
     }
 
-    public function enviarEmail()
+    public function enviarEmail($aluno)
     {
         
         $senha = $this->gerarSenha(["nome" => $this->nome, "ra" => $this->ra]);
