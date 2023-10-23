@@ -23,16 +23,14 @@ use Illuminate\Support\Facades\Mail;
 |--------------------------------------------------------------------------
 */
 Route::get('/testarEmail', function () {
-    // Dados de teste para enviar o e-mail
+    
     $data = [
         'username' => 'felipe',
         'password' => '5599',
     ];
 
-    // Endereço de e-mail para onde o e-mail de teste será enviado
     $destinatario = 'frsilveira20@gmail.com';
-
-    // Envie o e-mail usando a classe de envio do Laravel
+    
     Mail::to($destinatario)->send(new EnviarCredenciaisEmail($data));
 
     return 'E-mail de teste enviado com sucesso!';
