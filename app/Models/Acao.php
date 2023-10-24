@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Grupo;
 use App\Models\Dividendo;
 use App\Models\AcaoHistorico;
-
+use Goutte\Client;
+use stdClass;
 class Acao extends Model
 {
     protected $with = ['grupo', 'dividendos', 'historico'];
@@ -49,5 +50,26 @@ class Acao extends Model
 
     public function historico(){
         return $this->hasMany(AcaoHistorico::class, 'id_acao', 'id');
+    }
+
+    public static function getDemontrativos(string $sigla){
+        $client = new Client();
+    
+        $website = $client->request('GET', 'https://www.okanebox.com.br/w/demonstrativo-financeiro/'. $sigla);
+
+        $dados = $website->filter('li > div[style="background-color:#cfe5ff"]')->each(function ($node) {
+            return $node->filter('div')->each(function($node){ return $node->text(); });
+        });
+
+        array_shift($dados);
+
+        $retorno = new stdClass;
+
+        foreach($dados as $dado) {
+            $key = $dado[2];
+            $retorno->$key = $dado[3];
+        }
+
+        return $retorno;
     }
 }
