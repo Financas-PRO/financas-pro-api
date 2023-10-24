@@ -11,6 +11,9 @@ use App\Http\Requests\ImportarAcaoRequest;
 use App\Models\AcaoHistorico;
 use App\Models\Dividendo;
 use Illuminate\Support\Carbon;
+use Goutte\Client;
+use Illuminate\Http\Request;
+use stdClass;
 
 class AcaoController extends Controller
 {
@@ -107,7 +110,6 @@ class AcaoController extends Controller
         ];
     }
 
-
     /**
      * Display a listing of the resource.
      */
@@ -116,6 +118,11 @@ class AcaoController extends Controller
         $acoes = Acao::all()
             ->where('id_grupo', $grupo->id) 
             ->values();
+
+        foreach ($acoes as $acao){
+            $acao->demonstrativos = new stdClass;
+            $acao->demonstrativos = Acao::getDemontrativos($acao->simbolo);
+        }
 
         return [
             "status" => true,
