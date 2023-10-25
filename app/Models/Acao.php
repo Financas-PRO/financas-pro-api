@@ -37,7 +37,9 @@ class Acao extends Model
         'created_at',
         'updated_at',
         'id_grupo',
-        'ativo'
+        'ativo',
+        'grupo'
+
     ];
 
     public function grupo(){

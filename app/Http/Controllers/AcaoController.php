@@ -53,7 +53,7 @@ class AcaoController extends Controller
 
             $acao = new Acao([
                 'simbolo' => $apiAcao->symbol,
-                'nome_curto' => $apiAcao->shortName,
+                'nome_curto' => !empty($apiAcao->shortName) ? $apiAcao->shortName : "",
                 'nome_completo' => $apiAcao->longName,
                 'preco_merc_regular' => $apiAcao->regularMarketPrice,
                 'alto_merc_regular' => $apiAcao->regularMarketDayHigh,

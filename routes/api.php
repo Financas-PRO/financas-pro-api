@@ -22,6 +22,7 @@ use App\Http\Controllers\JornadaController;
 */
 Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout']);
+Route::get('acoes/{grupo}', [AcaoController::class, 'index']);
 /* ------------------------------------------------------------------------ */
 
 /*
@@ -80,7 +81,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('grupo/{turma}', [GrupoController::class, 'index']);
     Route::get("relacaoTurma/{turma}", [AlunoController::class, 'retornaRelacaoTurma']);
     Route::get('turma', [TurmaController::class, 'index']);
-    Route::get('acoes/{grupo}', [AcaoController::class, 'index']);
+    // Route::get('acoes/{grupo}', [AcaoController::class, 'index']);
     
     Route::post('jornada/{grupo}', [JornadaController::class, 'store']);
     Route::get('jornada/{jornada}', [JornadaController::class, 'show']);
