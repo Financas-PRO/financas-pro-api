@@ -120,8 +120,7 @@ class AcaoController extends Controller
             ->values();
 
         foreach ($acoes as $acao){
-            $acao->demonstrativos = new stdClass;
-            $acao->demonstrativos = Acao::getDemontrativos($acao->simbolo);
+            $acao->getDemontrativos();
         }
 
         return [
@@ -131,28 +130,28 @@ class AcaoController extends Controller
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreAcaoRequest $request)
-    {
-        $acoes = Acao::create($request->all());
-        $acoes->save();
+    // /**
+    //  * Store a newly created resource in storage.
+    //  */
+    // public function store(StoreAcaoRequest $request)
+    // {
+    //     $acoes = Acao::create($request->all());
+    //     $acoes->save();
 
-        return [
-            'status' => 1,
-            'data' => $acoes
-        ];
-    }
+    //     return [
+    //         'status' => 1,
+    //         'data' => $acoes
+    //     ];
+    // }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Acao $acao)
-    {
-        return [
-            "status" => true,
-            "data" => $acao
-        ];
-    }
+    // /**
+    //  * Display the specified resource.
+    //  */
+    // public function show(Acao $acao)
+    // {
+    //     return [
+    //         "status" => true,
+    //         "data" => $acao
+    //     ];
+    // }
 }

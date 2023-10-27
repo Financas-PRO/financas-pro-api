@@ -9,11 +9,12 @@ class Grupo extends Model
 {
     protected $table = 'grupos';
 
-    protected $with = ['turma', 'jornada'];
+    protected $with = ['turma'];
 
     protected $fillable = [
         'descricao',
-        'id_turma'
+        'id_turma',
+        'etapa'
     ];
 
     protected $hidden = [
@@ -27,7 +28,4 @@ class Grupo extends Model
         return $this->hasOne(Turma::class, 'id', 'id_turma');
     }
 
-    public function jornada(){
-        return $this->hasOne(Jornada::class, 'id');
-    }
 }
