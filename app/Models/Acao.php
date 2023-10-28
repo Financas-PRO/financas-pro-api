@@ -30,7 +30,8 @@ class Acao extends Model
         'link_logo',
         'preco_lucro',
         'data_importacao',
-        'id_grupo'
+        'id_grupo',
+        'demonstrativos'
     ];
 
     protected $hidden = [
@@ -39,7 +40,6 @@ class Acao extends Model
         'id_grupo',
         'ativo',
         'grupo'
-
     ];
 
     public function grupo(){
@@ -54,10 +54,10 @@ class Acao extends Model
         return $this->hasMany(AcaoHistorico::class, 'id_acao', 'id');
     }
 
-    public static function getDemontrativos(string $sigla){
+    public function getDemontrativos(){
         $client = new Client();
     
-        $website = $client->request('GET', 'https://www.okanebox.com.br/w/demonstrativo-financeiro/'. $sigla);
+        $website = $client->request('GET', 'https://www.okanebox.com.br/w/demonstrativo-financeiro/'. $this->simbolo);
 
         $dados = $website->filter('li > div[style="background-color:#cfe5ff"]')->each(function ($node) {
             return $node->filter('div')->each(function($node){ return $node->text(); });
@@ -72,6 +72,6 @@ class Acao extends Model
             $retorno->$key = $dado[3];
         }
 
-        return $retorno;
+        $this->demonstrativos = $retorno;
     }
 }

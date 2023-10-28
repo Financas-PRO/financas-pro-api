@@ -32,7 +32,10 @@ class AnaliseGrupoController extends Controller
     {
 
         $dados = $request->all();
-        $analiseGrupo = new AnaliseGrupo(['descricao' => $dados['descricao'], 'id_grupo' => $grupo->id]);
+        $analiseGrupo = new AnaliseGrupo([
+            'descricao' => $dados['descricao'],
+            'id_grupo' => $grupo->id
+        ]);
         $analiseGrupo->save();
 
         return [

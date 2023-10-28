@@ -71,10 +71,11 @@ Route::middleware('auth:api')->group(function () {
         });
 
         Route::post('analise/{grupo}', [AnaliseGrupoController::class, 'store']);
-        Route::put('analise/{analiseGrupo}', [AnaliseGrupoController::class, 'update']);
+        // Route::put('analise/{analiseGrupo}', [AnaliseGrupoController::class, 'update']);
         Route::post('grupo/{turma}', [GrupoController::class, 'store']);
         Route::delete('grupo/{grupo}', [GrupoController::class, 'destroy']);
         Route::post('acoes/{grupo}', [AcaoController::class, 'capturarAcoesB3']);
+        Route::post('atualizarEtapa/{grupo}', [GrupoController::class, 'atualizarEtapa']);
 
     });
 
@@ -83,9 +84,5 @@ Route::middleware('auth:api')->group(function () {
     Route::get('turma', [TurmaController::class, 'index']);
     // Route::get('acoes/{grupo}', [AcaoController::class, 'index']);
     
-    Route::post('jornada/{grupo}', [JornadaController::class, 'store']);
-    Route::get('jornada/{jornada}', [JornadaController::class, 'show']);
-    Route::put('jornada/{jornada}', [JornadaController::class, 'update']);
-
 });
 /* ------------------------------------------------------------------------ */

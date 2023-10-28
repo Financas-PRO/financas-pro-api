@@ -15,7 +15,8 @@ class Feedback extends Model
     protected $fillable = [
         'descricao',
         'id_docente',
-        'id_grupo'
+        'id_grupo',
+        'nota'
     ];
 
     protected $hidden = [

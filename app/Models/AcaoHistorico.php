@@ -7,7 +7,6 @@ use App\Models\Acao;
 
 class AcaoHistorico extends Model
 {
-
     protected $table = "acoeshistorico";
 
     protected $fillable = [
