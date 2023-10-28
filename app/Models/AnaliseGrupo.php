@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class AnaliseGrupo extends Model
 {
-
     protected $fillable = [
         'id_grupo',
         'descricao'

@@ -57,7 +57,7 @@ class Acao extends Model
     public function getDemontrativos(){
         $client = new Client();
     
-        $website = $client->request('GET', 'https://www.okanebox.com.br/w/demonstrativo-financeiro/'. $this->sigla);
+        $website = $client->request('GET', 'https://www.okanebox.com.br/w/demonstrativo-financeiro/'. $this->simbolo);
 
         $dados = $website->filter('li > div[style="background-color:#cfe5ff"]')->each(function ($node) {
             return $node->filter('div')->each(function($node){ return $node->text(); });

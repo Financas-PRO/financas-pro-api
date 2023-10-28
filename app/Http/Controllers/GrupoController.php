@@ -124,4 +124,14 @@ class GrupoController extends Controller
             "data" => $aluno_grupos
         ];
     }
+
+    public function atualizarEtapa(UpdateGrupoRequest $request, Grupo $grupo){
+
+        $grupo->update($request->only('etapa'));
+
+        return [
+            "status" => true,
+            "data" => $grupo
+        ];
+    }
 }

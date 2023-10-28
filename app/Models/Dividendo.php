@@ -7,8 +7,6 @@ use App\Models\Acao;
 
 class Dividendo extends Model
 {
-    protected $with = ['acao'];
-
     protected $fillable = [
         'ativo_emitido',
         'taxa',
