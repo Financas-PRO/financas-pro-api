@@ -5,15 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Acao;
 use App\Models\Grupo;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAcaoRequest;
-use App\Http\Requests\UpdateAcaoRequest;
 use App\Http\Requests\ImportarAcaoRequest;
 use App\Models\AcaoHistorico;
 use App\Models\Dividendo;
 use Illuminate\Support\Carbon;
-use Goutte\Client;
-use Illuminate\Http\Request;
-use stdClass;
 
 class AcaoController extends Controller
 {
@@ -103,6 +98,8 @@ class AcaoController extends Controller
 
             array_push($acoes, $acao);
         }
+
+        $grupo->update(['etapa' => "Demonstrativo"]);
 
         return [
             'status' => true,
