@@ -82,6 +82,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('grupo/{turma}', [GrupoController::class, 'index']);
     Route::get("relacaoTurma/{turma}", [AlunoController::class, 'retornaRelacaoTurma']);
     Route::get('turma', [TurmaController::class, 'index']);
+    Route::get('get_grupo/{grupo}', [GrupoController::class, 'show']);
     // Route::get('acoes/{grupo}', [AcaoController::class, 'index']);
     
 });
