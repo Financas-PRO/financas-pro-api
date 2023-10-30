@@ -32,27 +32,27 @@ class Grupo extends Model
 
         switch ($grupo->etapa){
             case "Empresas":
-                return "empresas/" . $grupo->id;
+                return "/empresa/" . $grupo->id;
                 break;
 
             case "Gráficos":
-                return "grafico/" . $grupo->id;
+                return "/grafico/" . $grupo->id;
                 break;
 
             case "Demonstrativo":
-                return "demonstrativo/" . $grupo->id;
+                return "/demonstrativo/" . $grupo->id;
                 break;
 
             case "Análise":
-                return "analise/" . $grupo->id;
+                return "/analise/" . $grupo->id;
                 break;
 
             case "Feedback":
-                return "aluno_feedback/" . $grupo->id;
+                return "/resumo/" . $grupo->id;
                 break;
 
             default:
-                return "cadastrar/" . $grupo->id;
+                return "/cadastrar/" . $grupo->id;
         }
          
     }
