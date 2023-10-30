@@ -9,12 +9,13 @@ class Grupo extends Model
 {
     protected $table = 'grupos';
 
-    protected $with = ['turma', 'rota_etapa'];
+    protected $with = ['turma'];
 
     protected $fillable = [
         'descricao',
         'id_turma',
-        'etapa'
+        'etapa',
+        'rota'
     ];
 
     protected $hidden = [
@@ -28,31 +29,31 @@ class Grupo extends Model
         return $this->hasOne(Turma::class, 'id', 'id_turma');
     }
 
-    public function rota_etapa(){
+    public function getRota(){
 
         switch ($this->etapa){
             case "Empresas":
-                return "empresas/" . $this->id;
+                $this->rota = "empresas/" . $this->id;
                 break;
 
             case "Gráficos":
-                return "grafico/" . $this->id;
+                $this->rota = "grafico/" . $this->id;
                 break;
 
             case "Demonstrativo":
-                return "demonstrativo/" . $this->id;
+                $this->rota = "demonstrativo/" . $this->id;
                 break;
 
             case "Análise":
-                return "analise/" . $this->id;
+                $this->rota = "analise/" . $this->id;
                 break;
 
             case "Feedback":
-                return "aluno_feedback/" . $this->id;
+                $this->rota = "aluno_feedback/" . $this->id;
                 break;
 
             default:
-                return "cadastrar/" . $this->id;
+                $this->rota = "cadastrar/" . $this->id;
         }
          
     }
