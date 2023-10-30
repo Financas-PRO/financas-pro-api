@@ -33,11 +33,14 @@ class GrupoController extends Controller
         }
 
         foreach ($grupos as $grupo){
+            
             $grupo->alunos = alunoGrupo::with('aluno')
             ->where('ativo', 1)
             ->where('id_grupo', $grupo->id)
             ->get()
             ->pluck('aluno');
+
+            $grupo->rota = Grupo::getRota($grupo);
         }
 
         return [

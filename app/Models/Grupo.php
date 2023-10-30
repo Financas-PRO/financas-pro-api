@@ -14,8 +14,7 @@ class Grupo extends Model
     protected $fillable = [
         'descricao',
         'id_turma',
-        'etapa',
-        'rota'
+        'etapa'
     ];
 
     protected $hidden = [
@@ -29,31 +28,31 @@ class Grupo extends Model
         return $this->hasOne(Turma::class, 'id', 'id_turma');
     }
 
-    public function getRota(){
+    public static function getRota($grupo){
 
-        switch ($this->etapa){
+        switch ($grupo->etapa){
             case "Empresas":
-                $this->rota = "empresas/" . $this->id;
+                return "empresas/" . $grupo->id;
                 break;
 
             case "Gráficos":
-                $this->rota = "grafico/" . $this->id;
+                return "grafico/" . $grupo->id;
                 break;
 
             case "Demonstrativo":
-                $this->rota = "demonstrativo/" . $this->id;
+                return "demonstrativo/" . $grupo->id;
                 break;
 
             case "Análise":
-                $this->rota = "analise/" . $this->id;
+                return "analise/" . $grupo->id;
                 break;
 
             case "Feedback":
-                $this->rota = "aluno_feedback/" . $this->id;
+                return "aluno_feedback/" . $grupo->id;
                 break;
 
             default:
-                $this->rota = "cadastrar/" . $this->id;
+                return "cadastrar/" . $grupo->id;
         }
          
     }
