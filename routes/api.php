@@ -72,6 +72,8 @@ Route::middleware('auth:api')->group(function () {
 
         Route::post('analise/{grupo}', [AnaliseGrupoController::class, 'store']);
         // Route::put('analise/{analiseGrupo}', [AnaliseGrupoController::class, 'update']);
+        Route::put('grupo/{grupo}', [GrupoController::class, 'update']);
+        Route::put('atualizarEtapa/{grupo}', [GrupoController::class, 'atualizarEtapa']);
         Route::post('grupo/{turma}', [GrupoController::class, 'store']);
         Route::delete('grupo/{grupo}', [GrupoController::class, 'destroy']);
         Route::post('acoes/{grupo}', [AcaoController::class, 'capturarAcoesB3']);
