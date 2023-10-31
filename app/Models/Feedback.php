@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Grupo;
 use App\Models\Docente;
+use Illuminate\Support\Facades\DB;
 
 class Feedback extends Model
 {
@@ -33,5 +34,17 @@ class Feedback extends Model
 
     public function docente(){
         return $this->hasOne(Docente::class, 'id', 'id_docente');
+    }
+
+    public function getRelatorioNotas(int $id_turma){
+
+        return DB::table('feedbacks')
+        ->join('grupos', 'grupos.id', '=', 'feedbacks.id_grupo')
+        ->join('aluno_grupos', 'aluno_grupos.id_grupo', '=', 'grupos.id')
+        ->join('alunos', 'alunos.id', '=', 'aluno_grupos.id_aluno')
+        ->select('alunos.nome', 'alunos.ra', 'feedbacks.nota')
+        ->where('grupos.id_turma', '=', $id_turma)
+        ->get();
+
     }
 }

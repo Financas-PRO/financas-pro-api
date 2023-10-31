@@ -8,6 +8,7 @@ use App\Http\Requests\StoreFeedbackRequest;
 use App\Http\Requests\UpdateFeedbackRequest;
 use App\Models\Grupo;
 use App\Models\Docente;
+use App\Models\Turma;
 
 class FeedbackController extends Controller
 {
@@ -83,5 +84,15 @@ class FeedbackController extends Controller
             "data" => $feedback
         ];
 
+    }
+
+    public function relatorio(Turma $turma){
+        
+        $model = new Feedback();
+        
+        return [
+            "status" => true,
+            "data" => $model->getRelatorioNotas($turma->id)
+        ]
     }
 }
