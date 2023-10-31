@@ -31,7 +31,8 @@ class Acao extends Model
         'preco_lucro',
         'data_importacao',
         'id_grupo',
-        'demonstrativos'
+        'demonstrativos',
+        'planilha_grupo'
     ];
 
     protected $hidden = [
