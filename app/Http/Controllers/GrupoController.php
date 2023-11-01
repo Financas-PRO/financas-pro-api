@@ -104,10 +104,10 @@ class GrupoController extends Controller
         $grupo->update(["etapa" => $dados['etapa']]);
 
         foreach ($dados["acoes"] as $dadoacao){
-            dd((object) $dadoacao);
-            // $acao = Acao::find($dadoacao->id);
 
-            // $acao->update(["planilha_grupo" => $dadoacao->planilha_grupo]);
+            $dadoacao = (object) $dadoacao;
+            $acao = Acao::find($dadoacao->id);
+            $acao->update(["planilha_grupo" => json_encode($dadoacao->planilha_grupo)]);
         }
 
         return [
