@@ -105,7 +105,6 @@ class GrupoController extends Controller
 
         foreach ($dados["acoes"] as $dadoacao){
             dd($dados["acoes"]);
-            dd($dadoacao);
             // $acao = Acao::find($dadoacao->id);
 
             // $acao->update(["planilha_grupo" => $dadoacao->planilha_grupo]);
