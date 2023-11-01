@@ -22,19 +22,19 @@ use Illuminate\Support\Facades\Mail;
 | ROTAS: autenticar o usuário
 |--------------------------------------------------------------------------
 */
-Route::get('/testarEmail', function () {
+/* Route::get('/testarEmail', function () {
     
     $data = [
         'username' => 'felipe',
         'password' => '5599',
     ];
 
-    $destinatario = 'frsilveira20@gmail.com';
+    $destinatario = 'frsilveira01@outlook.com';
     
     Mail::to($destinatario)->send(new EnviarCredenciaisEmail($data));
 
     return 'E-mail de teste enviado com sucesso!';
-});
+}); */
 
 Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout']);

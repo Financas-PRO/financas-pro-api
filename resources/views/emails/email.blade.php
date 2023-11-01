@@ -10,6 +10,6 @@
     <p><strong>Nome de Usuário:</strong> {{ $username }}</p>
     <p><strong>Senha:</strong> {{ $password }}</p>
     <p>Você pode usar essas credenciais para acessar o Finanças PRO.</p>
-    <p>Obrigado por se juntar a nós!</p>
+    <p>Obrigado por se juntar a nós e bons estudos!</p>
 </body>
 </html>

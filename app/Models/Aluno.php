@@ -117,22 +117,22 @@ class Aluno extends Model
 
     public function enviarEmail($aluno)
     {
-        
-        $senha = $this->gerarSenha(["nome" => $this->nome, "ra" => $this->ra]);
+    $senha = $this->gerarSenha(["nome" => $aluno->nome, "ra" => $aluno->ra]);
 
-        $data = [
-            'username' => $this->user->username,
-            'password' => $senha,
-        ];
+    $data = [
+        'username' => $aluno->user->username,
+        'password' => $senha,
+    ];
 
-        $destinatario = $this->user->email;
+    $destinatario = $aluno->user->email;
 
-        if ($destinatario) {
-            Mail::to($destinatario)->send(new EnviarCredenciaisEmail($data));
-        } else {
-            Log::error('Endereço de e-mail não disponível para o aluno' . $this->id);
-        }
+    if ($destinatario) {
+        Mail::to($destinatario)->send(new EnviarCredenciaisEmail($data));
+    } else {
+        Log::error('Endereço de e-mail não disponível para o aluno' . $aluno->id);
     }
+}
+
 
 
     private function atualizarAluno($aluno, $cursoid)
