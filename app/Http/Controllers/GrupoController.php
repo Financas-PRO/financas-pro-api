@@ -104,6 +104,7 @@ class GrupoController extends Controller
         $grupo->update(["etapa" => $dados['etapa']]);
 
         foreach ($dados["acoes"] as $dadoacao){
+            dd($dados["acoes"]);
             dd($dadoacao);
             // $acao = Acao::find($dadoacao->id);
 
