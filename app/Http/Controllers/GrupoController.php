@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateGrupoRequest;
 use App\Models\Aluno;
 use App\Models\alunoGrupo;
 use App\Models\Turma;
+use App\Models\Acao;
 
 class GrupoController extends Controller
 {
@@ -99,7 +100,14 @@ class GrupoController extends Controller
      */
     public function update(UpdateGrupoRequest $request, Grupo $grupo)
     {
-        $grupo->update($request->all());
+        $dados = $request->all();
+        $grupo->update(["etapa" => $dados['etapa']]);
+
+        foreach ($dados["acoes"] as $dadoacao){
+            $acao = Acao::find($dadoacao->id);
+
+            $acao->update(["planilha_grupo" => $dadoacao->planilha]);
+        }
 
         return [
             "status" => true,
