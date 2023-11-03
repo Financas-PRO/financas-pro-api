@@ -36,7 +36,7 @@ class Grupo extends Model
                 break;
 
             case "Gráficos":
-                return "/grafico/" . $grupo->id;
+                return "/analise/" . $grupo->id;
                 break;
 
             case "Demonstrativo":
