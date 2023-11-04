@@ -118,6 +118,7 @@ class AcaoController extends Controller
 
         foreach ($acoes as $acao){
             $acao->getDemontrativos();
+            $acao->planilha_grupo = json_decode($acao->planilha_grupo);
         }
 
         return [
