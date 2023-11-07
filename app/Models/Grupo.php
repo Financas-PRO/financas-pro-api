@@ -35,8 +35,8 @@ class Grupo extends Model
                 return "/empresa/" . $grupo->id;
                 break;
 
-            case "Gráficos":
-                return "/analise/" . $grupo->id;
+            case "Aguardando feedback":
+                return "/feedback/" . $grupo->id;
                 break;
 
             case "Demonstrativo":
@@ -47,12 +47,12 @@ class Grupo extends Model
                 return "/analise/" . $grupo->id;
                 break;
 
-            case "Feedback":
-                return "/resumo/" . $grupo->id;
+            case "Feedback concluído":
+                return "/feedback/" . $grupo->id;
                 break;
 
             default:
-                return "/cadastrar/" . $grupo->id;
+                return "/";
         }
          
     }

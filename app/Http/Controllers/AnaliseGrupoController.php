@@ -37,6 +37,7 @@ class AnaliseGrupoController extends Controller
             'id_grupo' => $grupo->id
         ]);
         $analiseGrupo->save();
+        $grupo->update(['etapa' => "Aguardando feedback"]);
 
         return [
             'status' => 1,

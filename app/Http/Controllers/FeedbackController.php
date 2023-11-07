@@ -39,6 +39,7 @@ class FeedbackController extends Controller
             'nota' => $dados['nota']
         ]);
         $feedback->save();
+        $grupo->update(['etapa' => "Feedback concluído"]);
         
         return [
             'status' => true,
