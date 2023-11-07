@@ -30,6 +30,7 @@ return new class extends Migration
             $table->dateTime('data_importacao');
             $table->unsignedBigInteger('id_grupo');
             $table->foreign('id_grupo')->references('id')->on('grupos');
+            $table->longText('planilha_grupo');
             $table->boolean("ativo")->default(1);
             $table->timestamps();
         });

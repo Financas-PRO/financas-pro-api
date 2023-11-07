@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('feedbacks', function (Blueprint $table) {
             $table->id();
             $table->string('descricao', 500);
+            $table->decimal('nota');
             $table->unsignedBigInteger('id_docente');
             $table->unsignedBigInteger('id_grupo');
             $table->foreign('id_docente')->references('id')->on('docentes');

@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFeedbackRequest;
 use App\Http\Requests\UpdateFeedbackRequest;
 use App\Models\Grupo;
+use App\Models\Docente;
+use App\Models\Turma;
 
 class FeedbackController extends Controller
 {
@@ -30,12 +32,17 @@ class FeedbackController extends Controller
     public function store(StoreFeedbackRequest $request, Grupo $grupo)
     {
         $dados = $request->all();
-        //TODO: retirar parametro de docente no futuro, pois ele vai buscar automático pela autenticação do usuário
-        $feedback = new Feedback(['descricao' => $dados['descricao'], 'id_docente' => $dados['id_docente'], 'id_grupo' => $grupo->id]);
+        $feedback = new Feedback([
+            'descricao' => $dados['descricao'], 
+            'id_docente' => (Docente::where('id_usuario', auth()->id())->first())->id, 
+            'id_grupo' => $grupo->id,
+            'nota' => $dados['nota']
+        ]);
         $feedback->save();
+        $grupo->update(['etapa' => "Feedback concluído"]);
         
         return [
-            'status' => 1,
+            'status' => true,
             'data' => $feedback
         ];
     }
@@ -78,5 +85,15 @@ class FeedbackController extends Controller
             "data" => $feedback
         ];
 
+    }
+
+    public function relatorio(Turma $turma){
+        
+        $model = new Feedback();
+        
+        return [
+            "status" => true,
+            "data" => $model->getRelatorioNotas($turma->id)
+        ]
     }
 }

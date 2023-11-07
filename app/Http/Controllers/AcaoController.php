@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Acao;
 use App\Models\Grupo;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAcaoRequest;
-use App\Http\Requests\UpdateAcaoRequest;
 use App\Http\Requests\ImportarAcaoRequest;
 use App\Models\AcaoHistorico;
 use App\Models\Dividendo;
@@ -50,7 +48,7 @@ class AcaoController extends Controller
 
             $acao = new Acao([
                 'simbolo' => $apiAcao->symbol,
-                'nome_curto' => $apiAcao->shortName,
+                'nome_curto' => !empty($apiAcao->shortName) ? $apiAcao->shortName : "",
                 'nome_completo' => $apiAcao->longName,
                 'preco_merc_regular' => $apiAcao->regularMarketPrice,
                 'alto_merc_regular' => $apiAcao->regularMarketDayHigh,
@@ -101,12 +99,13 @@ class AcaoController extends Controller
             array_push($acoes, $acao);
         }
 
+        $grupo->update(['etapa' => "Demonstrativo"]);
+
         return [
             'status' => true,
             'dados_importados' => $acoes
         ];
     }
-
 
     /**
      * Display a listing of the resource.
@@ -117,6 +116,11 @@ class AcaoController extends Controller
             ->where('id_grupo', $grupo->id) 
             ->values();
 
+        foreach ($acoes as $acao){
+            $acao->getDemontrativos();
+            $acao->planilha_grupo = json_decode($acao->planilha_grupo);
+        }
+
         return [
             "status" => true,
             'data' => $acoes
@@ -124,28 +128,28 @@ class AcaoController extends Controller
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreAcaoRequest $request)
-    {
-        $acoes = Acao::create($request->all());
-        $acoes->save();
+    // /**
+    //  * Store a newly created resource in storage.
+    //  */
+    // public function store(StoreAcaoRequest $request)
+    // {
+    //     $acoes = Acao::create($request->all());
+    //     $acoes->save();
 
-        return [
-            'status' => 1,
-            'data' => $acoes
-        ];
-    }
+    //     return [
+    //         'status' => 1,
+    //         'data' => $acoes
+    //     ];
+    // }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Acao $acao)
-    {
-        return [
-            "status" => true,
-            "data" => $acao
-        ];
-    }
+    // /**
+    //  * Display the specified resource.
+    //  */
+    // public function show(Acao $acao)
+    // {
+    //     return [
+    //         "status" => true,
+    //         "data" => $acao
+    //     ];
+    // }
 }

@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateGrupoRequest;
 use App\Models\Aluno;
 use App\Models\alunoGrupo;
 use App\Models\Turma;
+use App\Models\Acao;
 
 class GrupoController extends Controller
 {
@@ -33,11 +34,14 @@ class GrupoController extends Controller
         }
 
         foreach ($grupos as $grupo){
+            
             $grupo->alunos = alunoGrupo::with('aluno')
             ->where('ativo', 1)
             ->where('id_grupo', $grupo->id)
             ->get()
             ->pluck('aluno');
+
+            $grupo->rota = Grupo::getRota($grupo);
         }
 
         return [
@@ -51,13 +55,25 @@ class GrupoController extends Controller
      */
     public function store(StoreGrupoRequest $request, Turma $turma)
     {
-        $grupo = new Grupo(["id_turma" => $turma->id, "descricao" => $request->only('descricao')["descricao"]]);
+        $dados = $request->all();
+
+        $grupo = new Grupo([
+            "id_turma" => $turma->id, 
+            "descricao" => $dados["descricao"],
+            "etapa" => "Empresas"
+        ]);
+
         $grupo->save();
 
-        $alunos = $request->only("alunos")["alunos"];
+        $alunos = $dados["alunos"];
 
         foreach ($alunos as $aluno){
-            $aluno_grupo = new alunoGrupo(['id_grupo' => $grupo->id, 'id_aluno' => $aluno]);
+
+            $aluno_grupo = new alunoGrupo([
+                'id_grupo' => $grupo->id, 
+                'id_aluno' => $aluno
+            ]);
+            
             $aluno_grupo->save();
         };
         
@@ -84,7 +100,15 @@ class GrupoController extends Controller
      */
     public function update(UpdateGrupoRequest $request, Grupo $grupo)
     {
-        $grupo->update($request->all());
+        $dados = $request->all();
+        $grupo->update(["etapa" => $dados['etapa']]);
+
+        foreach ($dados["acoes"] as $dadoacao){
+
+            $dadoacao = (object) $dadoacao;
+            $acao = Acao::find($dadoacao->id);
+            $acao->update(["planilha_grupo" => json_encode($dadoacao->planilha_grupo)]);
+        }
 
         return [
             "status" => true,
@@ -110,6 +134,16 @@ class GrupoController extends Controller
         return [
             "status" => true,
             "data" => $aluno_grupos
+        ];
+    }
+
+    public function atualizarEtapa(UpdateGrupoRequest $request, Grupo $grupo){
+
+        $grupo->update($request->only('etapa'));
+
+        return [
+            "status" => true,
+            "data" => $grupo
         ];
     }
 }

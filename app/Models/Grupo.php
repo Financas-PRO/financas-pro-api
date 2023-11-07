@@ -9,11 +9,12 @@ class Grupo extends Model
 {
     protected $table = 'grupos';
 
-    protected $with = ['turma', 'jornada'];
+    protected $with = ['turma'];
 
     protected $fillable = [
         'descricao',
-        'id_turma'
+        'id_turma',
+        'etapa'
     ];
 
     protected $hidden = [
@@ -27,7 +28,33 @@ class Grupo extends Model
         return $this->hasOne(Turma::class, 'id', 'id_turma');
     }
 
-    public function jornada(){
-        return $this->hasOne(Jornada::class, 'id');
+    public static function getRota($grupo){
+
+        switch ($grupo->etapa){
+            case "Empresas":
+                return "/empresa/" . $grupo->id;
+                break;
+
+            case "Aguardando feedback":
+                return "/feedback/" . $grupo->id;
+                break;
+
+            case "Demonstrativo":
+                return "/demonstrativo/" . $grupo->id;
+                break;
+
+            case "Análise":
+                return "/analise/" . $grupo->id;
+                break;
+
+            case "Feedback concluído":
+                return "/feedback/" . $grupo->id;
+                break;
+
+            default:
+                return "/";
+        }
+         
     }
+
 }

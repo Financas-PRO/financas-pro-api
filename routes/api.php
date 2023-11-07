@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Mail;
 
 Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout']);
+Route::get('acoes/{grupo}', [AcaoController::class, 'index']);
 /* ------------------------------------------------------------------------ */
 
 /*
@@ -76,6 +77,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('feedback/{grupo}', [FeedbackController::class, 'store']);
         Route::put('feedback/{feedback}', [FeedbackController::class, 'update']);
         Route::post('importarAlunos/{turma}', [AlunoController::class, 'importarAlunos']);
+        Route::get('relatorioTurma/{turma}', [FeedbackController::class, 'relatorio']);
 
     });
 
@@ -86,21 +88,21 @@ Route::middleware('auth:api')->group(function () {
         });
 
         Route::post('analise/{grupo}', [AnaliseGrupoController::class, 'store']);
-        Route::put('analise/{analiseGrupo}', [AnaliseGrupoController::class, 'update']);
+        // Route::put('analise/{analiseGrupo}', [AnaliseGrupoController::class, 'update']);
+        Route::put('grupo/{grupo}', [GrupoController::class, 'update']);
+        Route::put('atualizarEtapa/{grupo}', [GrupoController::class, 'atualizarEtapa']);
         Route::post('grupo/{turma}', [GrupoController::class, 'store']);
         Route::delete('grupo/{grupo}', [GrupoController::class, 'destroy']);
         Route::post('acoes/{grupo}', [AcaoController::class, 'capturarAcoesB3']);
+        Route::post('atualizarEtapa/{grupo}', [GrupoController::class, 'atualizarEtapa']);
 
     });
 
     Route::get('grupo/{turma}', [GrupoController::class, 'index']);
     Route::get("relacaoTurma/{turma}", [AlunoController::class, 'retornaRelacaoTurma']);
     Route::get('turma', [TurmaController::class, 'index']);
-    Route::get('acoes/{grupo}', [AcaoController::class, 'index']);
+    Route::get('get_grupo/{grupo}', [GrupoController::class, 'show']);
+    // Route::get('acoes/{grupo}', [AcaoController::class, 'index']);
     
-    Route::post('jornada/{grupo}', [JornadaController::class, 'store']);
-    Route::get('jornada/{jornada}', [JornadaController::class, 'show']);
-    Route::put('jornada/{jornada}', [JornadaController::class, 'update']);
-
 });
 /* ------------------------------------------------------------------------ */
