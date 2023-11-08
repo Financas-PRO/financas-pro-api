@@ -37,7 +37,6 @@ use Illuminate\Support\Facades\Mail;
 }); */
 
 Route::post('login', [UserController::class, 'login']);
-Route::post('logout', [UserController::class, 'logout']);
 Route::get('acoes/{grupo}', [AcaoController::class, 'index']);
 /* ------------------------------------------------------------------------ */
 
@@ -103,6 +102,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('turma', [TurmaController::class, 'index']);
     Route::get('get_grupo/{grupo}', [GrupoController::class, 'show']);
     // Route::get('acoes/{grupo}', [AcaoController::class, 'index']);
+
+    Route::post('logout', [UserController::class, 'logout']);
     
 });
 /* ------------------------------------------------------------------------ */
