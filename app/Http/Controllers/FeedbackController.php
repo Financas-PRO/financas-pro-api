@@ -50,8 +50,10 @@ class FeedbackController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Feedback $feedback)
+    public function show(Grupo $grupo)
     {
+        $feedback = Feedback::where('id_grupo', $grupo->id)->get();
+        
         return [
             "status" => true,
             "data" => $feedback

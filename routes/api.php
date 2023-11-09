@@ -17,25 +17,6 @@ use App\Http\Controllers\JornadaController;
 use App\Mail\EnviarCredenciaisEmail;
 use Illuminate\Support\Facades\Mail;
 
-/*
-|--------------------------------------------------------------------------
-| ROTAS: autenticar o usuário
-|--------------------------------------------------------------------------
-*/
-/* Route::get('/testarEmail', function () {
-    
-    $data = [
-        'username' => 'felipe',
-        'password' => '5599',
-    ];
-
-    $destinatario = 'frsilveira01@outlook.com';
-    
-    Mail::to($destinatario)->send(new EnviarCredenciaisEmail($data));
-
-    return 'E-mail de teste enviado com sucesso!';
-}); */
-
 Route::post('login', [UserController::class, 'login']);
 Route::get('acoes/{grupo}', [AcaoController::class, 'index']);
 /* ------------------------------------------------------------------------ */
@@ -102,6 +83,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('turma', [TurmaController::class, 'index']);
     Route::get('get_grupo/{grupo}', [GrupoController::class, 'show']);
     // Route::get('acoes/{grupo}', [AcaoController::class, 'index']);
+    Route::get("feedback/{grupo}", [FeedbackController::class, 'show']);
 
     Route::post('logout', [UserController::class, 'logout']);
     
