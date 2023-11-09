@@ -53,7 +53,7 @@ class FeedbackController extends Controller
     public function show(Grupo $grupo)
     {
         $feedback = Feedback::where('id_grupo', $grupo->id)->get();
-        
+
         return [
             "status" => true,
             "data" => $feedback
@@ -96,6 +96,6 @@ class FeedbackController extends Controller
         return [
             "status" => true,
             "data" => $model->getRelatorioNotas($turma->id)
-        ]
+        ];
     }
 }
