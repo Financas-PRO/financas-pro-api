@@ -51,7 +51,7 @@ class AnaliseGrupoController extends Controller
     public function show(Grupo $grupo)
     {
 
-        $analiseGrupo = AnaliseGrupo::where('id_grupo', $grupo->id)->first();
+        $analiseGrupo = AnaliseGrupo::where('id_grupo', $grupo->id)->get()->first();
 
         return [
             "status" => true,
