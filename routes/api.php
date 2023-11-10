@@ -68,7 +68,6 @@ Route::middleware('auth:api')->group(function () {
         });
 
         Route::post('analise/{grupo}', [AnaliseGrupoController::class, 'store']);
-        Route::get('analise/{grupo}', [AnaliseGrupoController::class, 'show']);
         Route::put('grupo/{grupo}', [GrupoController::class, 'update']);
         Route::put('atualizarEtapa/{grupo}', [GrupoController::class, 'atualizarEtapa']);
         Route::post('grupo/{turma}', [GrupoController::class, 'store']);
@@ -84,6 +83,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('get_grupo/{grupo}', [GrupoController::class, 'show']);
     // Route::get('acoes/{grupo}', [AcaoController::class, 'index']);
     Route::get("feedback/{grupo}", [FeedbackController::class, 'show']);
+    Route::get('analise/{grupo}', [AnaliseGrupoController::class, 'show']);
+
 
     Route::post('logout', [UserController::class, 'logout']);
     
