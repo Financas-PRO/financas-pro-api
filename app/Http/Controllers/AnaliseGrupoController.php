@@ -48,8 +48,11 @@ class AnaliseGrupoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AnaliseGrupo $analiseGrupo)
+    public function show(Grupo $grupo)
     {
+
+        $analiseGrupo = AnaliseGrupo::where('id_grupo', $grupo->id)->get();
+        
         return [
             "status" => true,
             "data" => $analiseGrupo
