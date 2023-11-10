@@ -27,7 +27,6 @@ class TurmaController extends Controller
                 ->values();
         } else {
             $turmas = Turma::all()
-                ->where('ativo', 1)
                 ->where('id_docente', (Docente::where('id_usuario', auth()->id())->first())->id)
                 ->values();
         }

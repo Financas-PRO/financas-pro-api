@@ -15,7 +15,7 @@ class DocenteController extends Controller
      */
     public function index()
     {
-        $docentes = Docente::all()->where('ativo', 1)->values();
+        $docentes = Docente::all();
 
         return [
             "status" => true,

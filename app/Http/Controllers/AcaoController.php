@@ -26,8 +26,8 @@ class AcaoController extends Controller
         ];
 
         $curl_url = 'https://brapi.dev/api/quote/' .
-        implode(",", $request->only('empresas')['empresas']) .
-        '?' . http_build_query($params);
+            implode(",", $request->only('empresas')['empresas']) .
+            '?' . http_build_query($params);
 
         curl_setopt_array($client, [
             CURLOPT_RETURNTRANSFER => 1,
@@ -67,33 +67,39 @@ class AcaoController extends Controller
 
             $acao->save();
 
-            foreach ($apiAcao->dividendsData->cashDividends as $dividendo) {
+            if (isset($apiAcao->dividendsData->cashDividends)) {
 
-                $dividendo = new Dividendo([
-                    'ativo_emitido' => $dividendo->assetIssued,
-                    'taxa' => $dividendo->rate,
-                    'relacionado' => $dividendo->relatedTo,
-                    'rotulo' => $dividendo->label,
-                    'codigoISIN'=> $dividendo->isinCode,
-                    'id_acao' => $acao->id
-                ]);
+                foreach ($apiAcao->dividendsData->cashDividends as $dividendo) {
 
-                $dividendo->save();
+                    $dividendo = new Dividendo([
+                        'ativo_emitido' => $dividendo->assetIssued,
+                        'taxa' => $dividendo->rate,
+                        'relacionado' => $dividendo->relatedTo,
+                        'rotulo' => $dividendo->label,
+                        'codigoISIN' => $dividendo->isinCode,
+                        'id_acao' => $acao->id
+                    ]);
+
+                    $dividendo->save();
+                }
             }
 
-            foreach ($apiAcao->historicalDataPrice as $historico){
-                
-                $historico = new AcaoHistorico([
-                    'data_acao' => Carbon::createFromTimestamp($historico->date)->format('Y-m-d'),
-                    'preco_abertura' => $historico->open,
-                    'preco_mais_alto' => $historico->high,
-                    'preco_mais_baixo' => $historico->low,
-                    'preco_fechamento' => $historico->close,
-                    'preco_fechamento_ajustado' => $historico->adjustedClose,
-                    'id_acao' => $acao->id
-                ]);
+            if (isset($apiAcao->historicalDataPrice)) {
 
-                $historico->save();
+                foreach ($apiAcao->historicalDataPrice as $historico) {
+
+                    $historico = new AcaoHistorico([
+                        'data_acao' => Carbon::createFromTimestamp($historico->date)->format('Y-m-d'),
+                        'preco_abertura' => $historico->open,
+                        'preco_mais_alto' => $historico->high,
+                        'preco_mais_baixo' => $historico->low,
+                        'preco_fechamento' => $historico->close,
+                        'preco_fechamento_ajustado' => $historico->adjustedClose,
+                        'id_acao' => $acao->id
+                    ]);
+
+                    $historico->save();
+                }
             }
 
             array_push($acoes, $acao);
@@ -113,10 +119,10 @@ class AcaoController extends Controller
     public function index(Grupo $grupo)
     {
         $acoes = Acao::all()
-            ->where('id_grupo', $grupo->id) 
+            ->where('id_grupo', $grupo->id)
             ->values();
 
-        foreach ($acoes as $acao){
+        foreach ($acoes as $acao) {
             $acao->getDemontrativos();
             $acao->planilha_grupo = json_decode($acao->planilha_grupo);
         }
