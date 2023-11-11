@@ -52,11 +52,11 @@ class FeedbackController extends Controller
      */
     public function show(Grupo $grupo)
     {
-        $feedback = Feedback::where('id_grupo', $grupo->id)->get();
+        $feedback = Feedback::where('id_grupo', $grupo->id)->first();
 
         return [
             "status" => true,
-            "data" => $feedback[0]
+            "data" => $feedback
         ];
     }
 
