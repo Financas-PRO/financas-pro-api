@@ -56,7 +56,7 @@ class FeedbackController extends Controller
 
         return [
             "status" => true,
-            "data" => $feedback
+            "data" => $feedback[0]
         ];
     }
 
