@@ -58,6 +58,7 @@ Route::middleware('auth:api')->group(function () {
         Route::put('feedback/{feedback}', [FeedbackController::class, 'update']);
         Route::post('importarAlunos/{turma}', [AlunoController::class, 'importarAlunos']);
         Route::get('relatorioTurma/{turma}', [FeedbackController::class, 'relatorio']);
+        Route::get('notas/{turma}', [FeedbackController::class, 'retornaNotas']);
 
     });
 

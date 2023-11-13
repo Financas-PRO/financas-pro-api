@@ -42,7 +42,8 @@ class Feedback extends Model
         ->join('grupos', 'grupos.id', '=', 'feedbacks.id_grupo')
         ->join('aluno_grupos', 'aluno_grupos.id_grupo', '=', 'grupos.id')
         ->join('alunos', 'alunos.id', '=', 'aluno_grupos.id_aluno')
-        ->select('alunos.nome', 'alunos.ra', 'feedbacks.nota')
+        ->join('cursos', 'cursos.id', '=', 'alunos.id_curso')
+        ->select('alunos.nome', 'alunos.ra', 'feedbacks.nota', 'cursos.curso')
         ->where('grupos.id_turma', '=', $id_turma)
         ->get();
 

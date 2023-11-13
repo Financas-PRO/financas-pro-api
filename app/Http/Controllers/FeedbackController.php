@@ -89,13 +89,14 @@ class FeedbackController extends Controller
 
     }
 
-    public function relatorio(Turma $turma){
+    public function retornaNotas(Turma $turma){
         
-        $model = new Feedback();
-        
+        $feedback = new Feedback();
+        $relacao = $feedback->getRelatorioNotas($turma->id);
+
         return [
             "status" => true,
-            "data" => $model->getRelatorioNotas($turma->id)
-        ];
+            "data" => $relacao
+        ];    
     }
 }
