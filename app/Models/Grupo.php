@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Turma;
 use App\Models\alunoGrupo;
-use Aluno;
 
 class Grupo extends Model
 {
@@ -60,12 +59,25 @@ class Grupo extends Model
     }
 
     public function retornarUltimosGrupos(int $id_aluno){
-        return alunoGrupo::all()
+        $grupos = alunoGrupo::all()
         ->sortByDesc('updated_at')
         ->where('ativo', 1)
         ->where('id_aluno', $id_aluno)
         ->pluck('grupo')
         ->take(3);
+
+        foreach ($grupos as $grupo){
+            
+            $grupo->alunos = alunoGrupo::with('aluno')
+            ->where('ativo', 1)
+            ->where('id_grupo', $grupo->id)
+            ->get()
+            ->pluck('aluno');
+
+            $grupo->rota = Grupo::getRota($grupo);
+        }
+
+        return $grupos;
     }
 
 }
