@@ -7,6 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAnaliseGrupoRequest;
 use App\Http\Requests\UpdateAnaliseGrupoRequest;
 use App\Models\Grupo;
+use App\Models\Aluno;
+use App\Models\alunoGrupo;
+use Exception;
+use Illuminate\Validation\ValidationException;
 
 class AnaliseGrupoController extends Controller
 {
@@ -30,19 +34,32 @@ class AnaliseGrupoController extends Controller
      */
     public function store(StoreAnaliseGrupoRequest $request, Grupo $grupo)
     {
+        $alunos_grupo = alunoGrupo::where('id_grupo', $grupo->id)
+        ->get()
+        ->pluck('aluno')
+        ->pluck('id');
 
-        $dados = $request->all();
-        $analiseGrupo = new AnaliseGrupo([
-            'descricao' => $dados['descricao'],
-            'id_grupo' => $grupo->id
-        ]);
-        $analiseGrupo->save();
-        $grupo->update(['etapa' => "Aguardando feedback"]);
+        $busca_analise = AnaliseGrupo::getAnaliseAluno($alunos_grupo, $grupo->turma->id);
 
-        return [
-            'status' => 1,
-            'data' => $analiseGrupo
-        ];
+        if ($busca_analise < 1) {
+
+            $dados = $request->all();
+
+            $analiseGrupo = new AnaliseGrupo([
+                'descricao' => $dados['descricao'],
+                'id_grupo' => $grupo->id
+            ]);
+            
+            $analiseGrupo->save();
+            $grupo->update(['etapa' => "Aguardando feedback"]);
+
+            return [
+                'status' => 1,
+                'data' => $analiseGrupo
+            ];
+
+        } else throw new Exception("O grupo apresenta usuários que já enviaram feedback anteriormente.");
+
     }
 
     /**
