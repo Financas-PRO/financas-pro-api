@@ -85,6 +85,7 @@ Route::middleware('auth:api')->group(function () {
     // Route::get('acoes/{grupo}', [AcaoController::class, 'index']);
     Route::get("feedback/{grupo}", [FeedbackController::class, 'show']);
     Route::get('analise/{grupo}', [AnaliseGrupoController::class, 'show']);
+    Route::get('dashboard', [UserController::class, 'getDashboardInfo']);
 
 
     Route::post('logout', [UserController::class, 'logout']);

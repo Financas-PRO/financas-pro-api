@@ -20,6 +20,7 @@ class TurmaController extends Controller
         if (auth()->user()->id_tipoDeUsuario == 3) {
 
             $turmas = AlunoTurma::with('turma')
+                ->sortByDesc('created_at')                
                 ->where('ativo', 1)
                 ->where('id_aluno', (Aluno::where('id_usuario', auth()->id())->first())->id)
                 ->get()
@@ -27,6 +28,7 @@ class TurmaController extends Controller
                 ->values();
         } else {
             $turmas = Turma::all()
+                ->sortByDesc('created_at')
                 ->where('id_docente', (Docente::where('id_usuario', auth()->id())->first())->id)
                 ->values();
         }

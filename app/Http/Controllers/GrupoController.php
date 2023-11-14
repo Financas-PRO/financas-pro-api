@@ -21,16 +21,24 @@ class GrupoController extends Controller
         if (auth()->user()->id_tipoDeUsuario == 3) {
 
             $grupos = alunoGrupo::whereRelation('grupo', 'id_turma', '=', $turma->id)
+                ->sortByDesc('created_at')
                 ->where('ativo', 1)
                 ->where('id_aluno', (Aluno::where('id_usuario', auth()->id())->first())->id)
+                ->orderBy('created_at')
                 ->get()
                 ->pluck('grupo');
                 
         } else {
-            $grupos = Grupo::all()
+            $retorno = Grupo::all()
+                ->sortByDesc('created_at')
                 ->where('ativo', 1)
                 ->where('id_turma', $turma->id)
                 ->values();
+
+            $grupos = $retorno->filter(function ($grupo){
+                return $grupo->etapa === "Aguardando feedback" || $grupo->etapa === "Feedback concluído";
+            });
+                
         }
 
         foreach ($grupos as $grupo){

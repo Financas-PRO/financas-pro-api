@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Turma;
+use App\Models\alunoGrupo;
+use Aluno;
 
 class Grupo extends Model
 {
@@ -55,6 +57,16 @@ class Grupo extends Model
                 return "/";
         }
          
+    }
+
+    public function retornarPendencias(int $id_aluno){
+        return alunoGrupo::all()
+        ->sortByDesc('updated_at')
+        ->where('ativo', 1)
+        ->where('id_aluno', $id_aluno)
+        ->paginate(3)
+        ->get()
+        ->pluck('grupo');
     }
 
 }

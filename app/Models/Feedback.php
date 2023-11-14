@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Grupo;
 use App\Models\Docente;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class Feedback extends Model
 {
@@ -46,6 +47,30 @@ class Feedback extends Model
         ->select('alunos.nome', 'alunos.ra', 'feedbacks.nota', 'cursos.curso')
         ->where('grupos.id_turma', '=', $id_turma)
         ->get();
+
+    }
+
+    public function retornarPendencias(int $id_docente){
+        $obj = new stdClass;
+
+        $obj->concluidos = DB::table('feedbacks')
+        ->join('grupos', 'grupos.id', '=', 'feedbacks.id_grupo')
+        ->join('turmas', 'turmas.id', '=', 'grupos.id_turma')
+        ->where('turmas.id_docente', '=', $id_docente)
+        ->where('grupos.etapa', '=', 'Feedback concluído')
+        ->get()
+        ->count();
+
+
+        $obj->pendencias = DB::table('feedbacks')
+        ->join('grupos', 'grupos.id', '=', 'feedbacks.id_grupo')
+        ->join('turmas', 'turmas.id', '=', 'grupos.id_turma')
+        ->where('turmas.id_docente', '=', $id_docente)
+        ->where('grupos.etapa', '=', 'Aguardando feedback')
+        ->get()
+        ->count();
+
+        return $obj;
 
     }
 }
