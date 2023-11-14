@@ -21,7 +21,7 @@ class Grupo extends Model
 
     protected $hidden = [
         'created_at',
-        'updated_at',
+        // 'updated_at',
         'id_turma',
         'ativo'
     ];
@@ -59,14 +59,13 @@ class Grupo extends Model
          
     }
 
-    public function retornarPendencias(int $id_aluno){
+    public function retornarUltimosGrupos(int $id_aluno){
         return alunoGrupo::all()
         ->sortByDesc('updated_at')
         ->where('ativo', 1)
         ->where('id_aluno', $id_aluno)
-        ->paginate(3)
-        ->get()
-        ->pluck('grupo');
+        ->pluck('grupo')
+        ->take(3);
     }
 
 }
