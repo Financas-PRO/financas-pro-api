@@ -28,7 +28,7 @@ class UpdateDocenteRequest extends FormRequest
             'rg' => 'required|size:9|unique:docentes,rg,' . $this->route('docente')->id,
             'cpf' => 'required|size:14|unique:docentes,cpf,' . $this->route('docente')->id,
             'telefone' => 'required',
-            'matricula' => 'required|unique:docentes,matricula,' . $this->route('docente')->user->id,
+            'matricula' => 'required|unique:docentes,matricula,' . $this->route('docente')->id,
             "username" => "required|unique:users,username," . $this->route('docente')->user->id,
             'email' => 'required|email|unique:users,email,' . $this->route('docente')->user->id,
             'password' => 'sometimes|required|min:3',
