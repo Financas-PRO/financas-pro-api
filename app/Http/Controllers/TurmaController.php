@@ -76,7 +76,14 @@ class TurmaController extends Controller
      */
     public function update(UpdateTurmaRequest $request, Turma $turma)
     {
-        $turma->update($request->all());
+        $dados = $request->all();
+
+        $turma->update([
+            'descricao' => $dados['descricao'],
+            'semestre' => $dados['semestre'],
+            'ano' => $dados['ano'],
+            'id_docente' => (Docente::where('id_usuario', auth()->id())->first())->id
+        ]);
 
         return [
             "status" => true,
