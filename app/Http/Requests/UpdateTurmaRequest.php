@@ -25,22 +25,19 @@ class UpdateTurmaRequest extends FormRequest
     {
         return [
             'ano' => ['required', Rule::unique('turmas')->where(function ($query) use ($request) {
-                return $query->where('turma', $request->input('turma'))
-                    ->where('ano', $request->input('ano'))
+                return $query->where('ano', $request->input('ano'))
                     ->where('semestre', $request->input('semestre'))
                     ->where('descricao', $request->input('descricao'))
                     ->where('id', '!=', $this->route('turma')->id);
             }), 'size:4'],
             'semestre' => ['required',  Rule::unique('turmas')->where(function ($query) use ($request) {
-                return $query->where('turma', $request->input('turma'))
-                    ->where('ano', $request->input('ano'))
+                return $query->where('ano', $request->input('ano'))
                     ->where('semestre', $request->input('semestre'))
                     ->where('descricao', $request->input('descricao'))
                     ->where('id', '!=', $this->route('turma')->id);
             }), 'size:1'],
             'descricao' => ['required',  Rule::unique('turmas')->where(function ($query) use ($request) {
-                return $query->where('turma', $request->input('turma'))
-                    ->where('ano', $request->input('ano'))
+                return $query->where('ano', $request->input('ano'))
                     ->where('semestre', $request->input('semestre'))
                     ->where('descricao', $request->input('descricao'))
                     ->where('id', '!=', $this->route('turma')->id);
