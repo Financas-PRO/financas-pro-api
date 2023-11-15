@@ -47,20 +47,20 @@ class AcaoController extends Controller
         foreach ($apiData->results as $apiAcao) {
 
             $acao = new Acao([
-                'simbolo' => $apiAcao->symbol,
+                'simbolo' => !empty($apiAcao->symbol) ? $apiAcao->symbol : "",
                 'nome_curto' => !empty($apiAcao->shortName) ? $apiAcao->shortName : "",
                 'nome_completo' => !empty($apiAcao->longName) ? $apiAcao->longName : "",
-                'preco_merc_regular' => $apiAcao->regularMarketPrice,
-                'alto_merc_regular' => $apiAcao->regularMarketDayHigh,
-                'baixo_merc_regular' => $apiAcao->regularMarketDayLow,
-                'intervalo_merc_regular' => $apiAcao->regularMarketDayRange,
-                'variacao_merc_regular' => $apiAcao->regularMarketChange,
-                'valor_merc' => $apiAcao->marketCap,
-                'volume_merc_regular' => $apiAcao->regularMarketVolume,
-                'fecha_ant_merc_regular' => $apiAcao->regularMarketPreviousClose,
-                'abertura_merc_regular' => $apiAcao->regularMarketOpen,
+                'preco_merc_regular' => !empty($apiAcao->regularMarketPrice) ? $apiAcao->regularMarketPrice : "",
+                'alto_merc_regular' => !empty($apiAcao->regularMarketDayHigh) ? $apiAcao->regularMarketDayHigh : "",
+                'baixo_merc_regular' => !empty($apiAcao->regularMarketDayLow) ? $apiAcao->regularMarketDayLow : "",
+                'intervalo_merc_regular' => !empty($apiAcao->regularMarketDayRange) ? $apiAcao->regularMarketDayRange : "",
+                'variacao_merc_regular' => !empty($apiAcao->regularMarketChange) ? $apiAcao->regularMarketChange : "",
+                'valor_merc' => !empty($apiAcao->marketCap) ? $apiAcao->marketCap : "",
+                'volume_merc_regular' => !empty($apiAcao->regularMarketVolume) ? $apiAcao->regularMarketVolume : "",
+                'fecha_ant_merc_regular' => !empty($apiAcao->regularMarketPreviousClose) ? $apiAcao->regularMarketPreviousClose : "",
+                'abertura_merc_regular' => !empty($apiAcao->regularMarketOpen) ? $apiAcao->regularMarketOpen : "",
                 'link_logo' => !empty($apiAcao->logourl) ? $apiAcao->logourl : "",
-                'preco_lucro' => $apiAcao->priceEarnings,
+                'preco_lucro' => !empty($apiAcao->priceEarnings)? $apiAcao->priceEarnings : "",
                 'data_importacao' => now(),
                 'id_grupo' => $grupo->id
             ]);
