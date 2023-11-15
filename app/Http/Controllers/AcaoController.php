@@ -49,7 +49,7 @@ class AcaoController extends Controller
             $acao = new Acao([
                 'simbolo' => $apiAcao->symbol,
                 'nome_curto' => !empty($apiAcao->shortName) ? $apiAcao->shortName : "",
-                'nome_completo' => $apiAcao->longName,
+                'nome_completo' => !empty($apiAcao->longName) ? $apiAcao->longName : "",
                 'preco_merc_regular' => $apiAcao->regularMarketPrice,
                 'alto_merc_regular' => $apiAcao->regularMarketDayHigh,
                 'baixo_merc_regular' => $apiAcao->regularMarketDayLow,
@@ -59,7 +59,7 @@ class AcaoController extends Controller
                 'volume_merc_regular' => $apiAcao->regularMarketVolume,
                 'fecha_ant_merc_regular' => $apiAcao->regularMarketPreviousClose,
                 'abertura_merc_regular' => $apiAcao->regularMarketOpen,
-                'link_logo' => $apiAcao->logourl ? $apiAcao->logourl : "",
+                'link_logo' => !empty($apiAcao->logourl) ? $apiAcao->logourl : "",
                 'preco_lucro' => $apiAcao->priceEarnings,
                 'data_importacao' => now(),
                 'id_grupo' => $grupo->id
