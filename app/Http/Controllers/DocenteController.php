@@ -76,8 +76,8 @@ class DocenteController extends Controller
     {
 
         $usuario = User::find($docente->user->id);
-        $usuario->ativo = 0;
-        $docente->ativo = 0;
+        $usuario->ativo ? $usuario->ativo = 0 : $usuario->ativo = 1;
+        $docente->ativo ? $docente->ativo = 0 : $docente->ativo = 1;
         $docente->update();
         $usuario->update();
 

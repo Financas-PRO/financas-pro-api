@@ -90,7 +90,7 @@ class TurmaController extends Controller
     public function destroy(Turma $turma)
     {
 
-        $turma->ativo = 0;
+        $turma->ativo ?  $turma->ativo = 0 : $turma->ativo = 1;
         $turma->update();
 
         return [
