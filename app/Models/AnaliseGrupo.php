@@ -20,11 +20,11 @@ class AnaliseGrupo extends Model
     ];
 
     public static function getAnaliseAluno(Collection $alunos, int $turma){
-        return DB::table('feedbacks')
-        ->join('grupos', 'grupos.id', '=', 'feedbacks.id_grupo')
+        return DB::table('analise_grupos')
+        ->join('grupos', 'grupos.id', '=', 'analise_grupos.id_grupo')
         ->join('aluno_grupos', 'aluno_grupos.id_grupo', '=', 'grupos.id')
         ->join('turmas', 'turmas.id', '=', 'grupos.id_turma')
-        ->where('turmas.id', '=', $turma)
+        ->where('grupos.id_turma', '=', $turma)
         ->whereIn('aluno_grupos.id_aluno', $alunos)
         ->get()
         ->count();
