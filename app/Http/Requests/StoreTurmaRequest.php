@@ -53,6 +53,7 @@ class StoreTurmaRequest extends FormRequest
             'id_curso.required' => 'O id_curso é obrigatório.',
             'turma.required' => 'A turma é obrigatória.',
             'turma.size' => 'O campo turma deve ser definida com apenas 1 letra.',
+            'descricao.required' => 'A descrição de turma é obrigatória.',
         ];
     }
 }

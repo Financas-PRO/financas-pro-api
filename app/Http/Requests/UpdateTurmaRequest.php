@@ -49,7 +49,8 @@ class UpdateTurmaRequest extends FormRequest
             'ano.required' => 'O ano é obrigatório.',
             'ano.size' => 'Use o ano com 4 números (Ex: 2016).',
             'semestre.required' => 'O semestre é obrigatório.',
-            'descricao.required' => 'A descrição é obrigatória.'
+            'descricao.required' => 'A descrição é obrigatória.',
+            //'descricao.filled' => 'A descrição de turma é obrigatória.',
         ];
     }
 }

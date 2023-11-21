@@ -46,7 +46,7 @@ class UpdateDocenteRequest extends FormRequest
             "rg.size" => "Por favor, digite apenas 9 digítos para o RG.",
             "rg.unique" => "O RG informado já está cadastrado.",
             "cpf.required" => "O CPF é obrigatório.",
-            "cpf.size" => "O CPF precisa ter 14 dígitos.",
+            "cpf.size" => "O CPF precisa ter 11 dígitos.",
             "cpf.unique" => "O CPF informado já está cadastrado.",
             "telefone.required" => "O telefone é obrigatório",
             "matricula.unique" => "Essa matrícula já foi registrada.",
