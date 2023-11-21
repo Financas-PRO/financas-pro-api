@@ -62,8 +62,7 @@ class Feedback extends Model
         ->count();
 
 
-        $obj->pendencias = DB::table('feedbacks')
-        ->join('grupos', 'grupos.id', '=', 'feedbacks.id_grupo')
+        $obj->pendencias = DB::table('grupos')
         ->join('turmas', 'turmas.id', '=', 'grupos.id_turma')
         ->where('turmas.id_docente', '=', $id_docente)
         ->where('grupos.etapa', '=', 'Aguardando feedback')
